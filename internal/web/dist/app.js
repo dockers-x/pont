@@ -83,7 +83,7 @@ async function fetchVersion() {
     try {
         const res = await fetch(`${API_BASE}/version`);
         const data = await res.json();
-        elements.versionInfo.textContent = `v${data.version}`;
+        elements.versionInfo.textContent = data.version.startsWith('v') ? data.version : `v${data.version}`;
         elements.versionInfo.title = `Version: ${data.version}\nBuild: ${data.build_time}\nCommit: ${data.git_commit}`;
     } catch (err) {
         console.error('Failed to fetch version:', err);
