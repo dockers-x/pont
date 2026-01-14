@@ -3,6 +3,8 @@
 .gitignore
 .github
 
+# go
+go.sum
 # Documentation
 *.md
 docs/
