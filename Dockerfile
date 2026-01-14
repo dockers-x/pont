@@ -63,9 +63,5 @@ ENV PORT=13333
 ENV DATA_DIR=/app/data
 ENV LOG_DIR=/app/logs
 
-# Health check - uses PORT environment variable
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:${PORT}/ || exit 1
-
 # Run the application
 CMD ["./pont"]

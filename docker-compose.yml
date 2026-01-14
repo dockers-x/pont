@@ -21,12 +21,6 @@ services:
       - TZ=UTC
       # Optional: Set log level (debug, info, warn, error)
       # - LOG_LEVEL=info
-    healthcheck:
-      test: ["CMD", "sh", "-c", "wget --no-verbose --tries=1 --spider http://localhost:$$PORT/ || exit 1"]
-      interval: 30s
-      timeout: 3s
-      start_period: 5s
-      retries: 3
     # Optional: Resource limits
     deploy:
       resources:
