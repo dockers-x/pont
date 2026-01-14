@@ -1,0 +1,58 @@
+{
+  "app.name": "Pont",
+  "app.starting": "Pont {{.Version}} を起動しています",
+  "app.shutdown": "シャットダウンシグナルを受信しました。正常にシャットダウンしています...",
+  "app.shutdown_complete": "シャットダウン完了",
+
+  "dir.data": "データディレクトリ：{{.Path}}",
+  "dir.log": "ログディレクトリ：{{.Path}}",
+
+  "db.init_success": "データベースの初期化に成功しました",
+  "db.init_failed": "データベースの初期化に失敗しました：{{.Error}}",
+
+  "config.init": "設定マネージャーが初期化されました",
+  "service.init": "サービスマネージャーが初期化されました",
+
+  "server.listening": "HTTPサーバーが {{.Address}} でリッスンしています",
+  "server.error": "HTTPサーバーエラー：{{.Error}}",
+  "server.shutdown": "HTTPサーバーをシャットダウンしています...",
+  "server.shutdown_error": "サーバーのシャットダウン中にエラーが発生しました：{{.Error}}",
+
+  "tunnel.stopping_all": "すべてのトンネルを停止しています...",
+  "tunnel.stop_error": "トンネルの停止中にエラーが発生しました：{{.Error}}",
+
+  "error.create_dir": "{{.Type}}ディレクトリの作成に失敗しました：{{.Error}}",
+  "error.init_logger": "ロガーの初期化に失敗しました：{{.Error}}",
+
+  "ui.tunnels": "トンネル",
+  "ui.add_tunnel": "トンネルを追加",
+  "ui.system_logs": "システムログ",
+  "ui.enable_realtime_logs": "リアルタイムログを有効にする",
+  "ui.disable_realtime_logs": "リアルタイムログを無効にする",
+  "ui.clear": "クリア",
+  "ui.system_ready": "システム準備完了。設定を待っています...",
+  "ui.no_tunnels": "トンネルが設定されていません。「トンネルを追加」をクリックして作成してください。",
+
+  "ui.modal.add_tunnel": "トンネルを追加",
+  "ui.modal.edit_tunnel": "トンネルを編集",
+  "ui.modal.name": "名前",
+  "ui.modal.type": "タイプ",
+  "ui.modal.target": "ターゲット",
+  "ui.modal.ngrok_authtoken": "Ngrok 認証トークン",
+  "ui.modal.ngrok_domain": "Ngrok ドメイン（オプション）",
+  "ui.modal.enabled": "有効",
+  "ui.modal.cancel": "キャンセル",
+  "ui.modal.save": "保存",
+
+  "ui.tunnel.status": "ステータス",
+  "ui.tunnel.url": "URL",
+  "ui.tunnel.actions": "アクション",
+  "ui.tunnel.start": "開始",
+  "ui.tunnel.stop": "停止",
+  "ui.tunnel.edit": "編集",
+  "ui.tunnel.delete": "削除",
+  "ui.tunnel.running": "実行中",
+  "ui.tunnel.stopped": "停止",
+
+  "ui.theme.toggle": "テーマを切り替え"
+}

@@ -1,0 +1,58 @@
+{
+  "app.name": "Pont",
+  "app.starting": "Starting Pont {{.Version}}",
+  "app.shutdown": "Shutdown signal received, gracefully shutting down...",
+  "app.shutdown_complete": "Shutdown complete",
+
+  "dir.data": "Data directory: {{.Path}}",
+  "dir.log": "Log directory: {{.Path}}",
+
+  "db.init_success": "Database initialized successfully",
+  "db.init_failed": "Failed to initialize database: {{.Error}}",
+
+  "config.init": "Configuration manager initialized",
+  "service.init": "Service manager initialized",
+
+  "server.listening": "HTTP server listening on {{.Address}}",
+  "server.error": "HTTP server error: {{.Error}}",
+  "server.shutdown": "Shutting down HTTP server...",
+  "server.shutdown_error": "Error shutting down server: {{.Error}}",
+
+  "tunnel.stopping_all": "Stopping all tunnels...",
+  "tunnel.stop_error": "Error stopping tunnels: {{.Error}}",
+
+  "error.create_dir": "Failed to create {{.Type}} directory: {{.Error}}",
+  "error.init_logger": "Failed to initialize logger: {{.Error}}",
+
+  "ui.tunnels": "Tunnels",
+  "ui.add_tunnel": "+ Add Tunnel",
+  "ui.system_logs": "System Logs",
+  "ui.enable_realtime_logs": "Enable Real-time Logs",
+  "ui.disable_realtime_logs": "Disable Real-time Logs",
+  "ui.clear": "Clear",
+  "ui.system_ready": "System ready. Waiting for configuration...",
+  "ui.no_tunnels": "No tunnels configured. Click \"Add Tunnel\" to create one.",
+
+  "ui.modal.add_tunnel": "Add Tunnel",
+  "ui.modal.edit_tunnel": "Edit Tunnel",
+  "ui.modal.name": "Name",
+  "ui.modal.type": "Type",
+  "ui.modal.target": "Target",
+  "ui.modal.ngrok_authtoken": "Ngrok Auth Token",
+  "ui.modal.ngrok_domain": "Ngrok Domain (optional)",
+  "ui.modal.enabled": "Enabled",
+  "ui.modal.cancel": "Cancel",
+  "ui.modal.save": "Save",
+
+  "ui.tunnel.status": "Status",
+  "ui.tunnel.url": "URL",
+  "ui.tunnel.actions": "Actions",
+  "ui.tunnel.start": "Start",
+  "ui.tunnel.stop": "Stop",
+  "ui.tunnel.edit": "Edit",
+  "ui.tunnel.delete": "Delete",
+  "ui.tunnel.running": "Running",
+  "ui.tunnel.stopped": "Stopped",
+
+  "ui.theme.toggle": "Toggle Theme"
+}

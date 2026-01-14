@@ -1,0 +1,58 @@
+{
+  "app.name": "Pont",
+  "app.starting": "正在启动 Pont {{.Version}}",
+  "app.shutdown": "收到关闭信号，正在优雅关闭...",
+  "app.shutdown_complete": "关闭完成",
+
+  "dir.data": "数据目录：{{.Path}}",
+  "dir.log": "日志目录：{{.Path}}",
+
+  "db.init_success": "数据库初始化成功",
+  "db.init_failed": "数据库初始化失败：{{.Error}}",
+
+  "config.init": "配置管理器已初始化",
+  "service.init": "服务管理器已初始化",
+
+  "server.listening": "HTTP 服务器正在监听 {{.Address}}",
+  "server.error": "HTTP 服务器错误：{{.Error}}",
+  "server.shutdown": "正在关闭 HTTP 服务器...",
+  "server.shutdown_error": "关闭服务器时出错：{{.Error}}",
+
+  "tunnel.stopping_all": "正在停止所有隧道...",
+  "tunnel.stop_error": "停止隧道时出错：{{.Error}}",
+
+  "error.create_dir": "创建{{.Type}}目录失败：{{.Error}}",
+  "error.init_logger": "初始化日志记录器失败：{{.Error}}",
+
+  "ui.tunnels": "隧道",
+  "ui.add_tunnel": "添加隧道",
+  "ui.system_logs": "系统日志",
+  "ui.enable_realtime_logs": "启用实时日志",
+  "ui.disable_realtime_logs": "禁用实时日志",
+  "ui.clear": "清除",
+  "ui.system_ready": "系统就绪。等待配置...",
+  "ui.no_tunnels": "未配置隧道。点击"添加隧道"创建一个。",
+
+  "ui.modal.add_tunnel": "添加隧道",
+  "ui.modal.edit_tunnel": "编辑隧道",
+  "ui.modal.name": "名称",
+  "ui.modal.type": "类型",
+  "ui.modal.target": "目标",
+  "ui.modal.ngrok_authtoken": "Ngrok 认证令牌",
+  "ui.modal.ngrok_domain": "Ngrok 域名（可选）",
+  "ui.modal.enabled": "已启用",
+  "ui.modal.cancel": "取消",
+  "ui.modal.save": "保存",
+
+  "ui.tunnel.status": "状态",
+  "ui.tunnel.url": "网址",
+  "ui.tunnel.actions": "操作",
+  "ui.tunnel.start": "启动",
+  "ui.tunnel.stop": "停止",
+  "ui.tunnel.edit": "编辑",
+  "ui.tunnel.delete": "删除",
+  "ui.tunnel.running": "运行中",
+  "ui.tunnel.stopped": "已停止",
+
+  "ui.theme.toggle": "切换主题"
+}

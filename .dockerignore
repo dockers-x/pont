@@ -1,0 +1,41 @@
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+docs/
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+dist/
+build/
+
+# Test files
+*_test.go
+testdata/
+
+# Local data
+data/
+logs/
+*.log
+
+# Dependencies
+vendor/
+
+# OS
+.DS_Store
+Thumbs.db
+
+#data
+/data

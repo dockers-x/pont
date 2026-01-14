@@ -1,0 +1,32 @@
+
+# IDE
+.vscode
+.idea
+.claude
+*.swp
+*.swo
+
+# Build artifacts
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test files
+*_test.go
+testdata/
+
+# Local data
+data/
+logs/
+*.log
+
+# Dependencies
+vendor/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# binary
+/pont

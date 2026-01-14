@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en" id="html-root">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Pont</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="style.css" />
+        <script src="i18n.js"></script>
+    </head>
+    <body>
+        <div class="app-container">
+            <header class="header">
+                <div class="logo-area">
+                    <h1>Pont</h1>
+                </div>
+                <div class="header-controls">
+                    <label for="language-selector" class="visually-hidden"
+                        >Language</label
+                    >
+                    <select
+                        id="language-selector"
+                        class="language-selector"
+                        aria-label="Select Language"
+                    >
+                        <option value="en">English</option>
+                        <option value="zh">简体中文</option>
+                        <option value="ja">日本語</option>
+                    </select>
+                    <button
+                        id="theme-toggle"
+                        class="theme-toggle"
+                        aria-label="Toggle Theme"
+                    >
+                        <svg
+                            class="sun-icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line
+                                x1="4.22"
+                                y1="4.22"
+                                x2="5.64"
+                                y2="5.64"
+                            ></line>
+                            <line
+                                x1="18.36"
+                                y1="18.36"
+                                x2="19.78"
+                                y2="19.78"
+                            ></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line
+                                x1="4.22"
+                                y1="19.78"
+                                x2="5.64"
+                                y2="18.36"
+                            ></line>
+                            <line
+                                x1="18.36"
+                                y1="5.64"
+                                x2="19.78"
+                                y2="4.22"
+                            ></line>
+                        </svg>
+                        <svg
+                            class="moon-icon"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                        >
+                            <path
+                                d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+                <span class="version-info" id="version-info">Loading…</span>
+            </header>
+
+            <main class="main-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 data-i18n="ui.tunnels">Tunnels</h2>
+                        <button
+                            id="add-tunnel-btn"
+                            class="btn btn-primary btn-sm"
+                            data-i18n="ui.add_tunnel"
+                        >
+                            + Add Tunnel
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div id="tunnels-list" class="tunnels-list"></div>
+                    </div>
+                </div>
+
+                <div class="card logs-card">
+                    <div class="card-header">
+                        <h2 data-i18n="ui.system_logs">System Logs</h2>
+                        <div class="logs-controls">
+                            <button
+                                id="toggle-stream"
+                                class="btn btn-sm btn-secondary"
+                                data-i18n="ui.enable_realtime_logs"
+                            >
+                                Enable Real-time Logs
+                            </button>
+                            <button
+                                id="clear-logs"
+                                class="btn btn-sm btn-ghost"
+                                data-i18n="ui.clear"
+                            >
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                    <div class="logs-container" id="logs-container">
+                        <div
+                            class="log-entry system"
+                            data-i18n="ui.system_ready"
+                        >
+                            System ready. Waiting for configuration...
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div id="tunnel-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modal-title" data-i18n="ui.modal.add_tunnel">
+                        Add Tunnel
+                    </h2>
+                    <button class="modal-close" aria-label="Close">
+                        &times;
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="tunnel-form">
+                        <div class="form-group">
+                            <label for="tunnel-name"
+                                ><span data-i18n="ui.modal.name">Name</span>
+                                <span class="required">*</span></label
+                            >
+                            <input
+                                type="text"
+                                id="tunnel-name"
+                                name="tunnel-name"
+                                autocomplete="off"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label class="toggle-container">
+                                <input type="checkbox" id="tunnel-enabled" />
+                                <span data-i18n="ui.modal.enabled"
+                                    >Enabled</span
+                                >
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="tunnel-type"
+                                ><span data-i18n="ui.modal.type">Type</span>
+                                <span class="required">*</span></label
+                            >
+                            <select
+                                id="tunnel-type"
+                                class="form-select"
+                                name="tunnel-type"
+                                required
+                            >
+                                <option value="cloudflare">Cloudflare</option>
+                                <option value="ngrok">Ngrok</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tunnel-target"
+                                ><span data-i18n="ui.modal.target">Target</span>
+                                <span class="required">*</span></label
+                            >
+                            <input
+                                type="url"
+                                id="tunnel-target"
+                                name="tunnel-target"
+                                placeholder="http://localhost:8080…"
+                                autocomplete="off"
+                                required
+                            />
+                        </div>
+                        <div id="ngrok-fields" style="display: none">
+                            <div class="form-group">
+                                <label for="ngrok-authtoken"
+                                    ><span data-i18n="ui.modal.ngrok_authtoken"
+                                        >Ngrok Auth Token</span
+                                    >
+                                    <span
+                                        class="required"
+                                        id="ngrok-authtoken-required"
+                                        >*</span
+                                    ></label
+                                >
+                                <div class="password-input-wrapper">
+                                    <input
+                                        type="password"
+                                        id="ngrok-authtoken"
+                                        name="ngrok-authtoken"
+                                        autocomplete="off"
+                                        required
+                                    />
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        id="toggle-authtoken"
+                                        aria-label="Toggle password visibility"
+                                    >
+                                        <svg
+                                            class="eye-icon"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                        >
+                                            <path
+                                                d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"
+                                            ></path>
+                                            <circle
+                                                cx="12"
+                                                cy="12"
+                                                r="3"
+                                            ></circle>
+                                        </svg>
+                                        <svg
+                                            class="eye-off-icon"
+                                            width="20"
+                                            height="20"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="2"
+                                            style="display: none"
+                                        >
+                                            <path
+                                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+                                            ></path>
+                                            <line
+                                                x1="1"
+                                                y1="1"
+                                                x2="23"
+                                                y2="23"
+                                            ></line>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <small class="form-help"
+                                    ><span
+                                        data-i18n="ui.modal.ngrok_authtoken_help"
+                                        >Get your authtoken from</span
+                                    >
+                                    <a
+                                        href="https://dashboard.ngrok.com/get-started/your-authtoken"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >ngrok dashboard</a
+                                    ></small
+                                >
+                            </div>
+                            <div class="form-group">
+                                <label
+                                    for="ngrok-domain"
+                                    data-i18n="ui.modal.ngrok_domain"
+                                    >Ngrok Domain (optional)</label
+                                >
+                                <input
+                                    type="text"
+                                    id="ngrok-domain"
+                                    name="ngrok-domain"
+                                    autocomplete="off"
+                                />
+                            </div>
+                        </div>
+                        <div class="modal-actions">
+                            <button
+                                type="button"
+                                class="btn btn-ghost modal-cancel"
+                                data-i18n="ui.modal.cancel"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                class="btn btn-primary"
+                                data-i18n="ui.modal.save"
+                            >
+                                Save
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <script src="app.js"></script>
+    </body>
+</html>
