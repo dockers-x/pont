@@ -6,7 +6,6 @@ on:
       - "v*"
   workflow_dispatch:
 
-
 permissions:
   contents: write
   packages: write
@@ -35,13 +34,13 @@ jobs:
             ## Installation
             ```bash
             # Linux/macOS
-            tar xzf supertunnel-<platform>.tar.gz
-            chmod +x supertunnel
-            ./supertunnel
+            tar xzf pont-<platform>.tar.gz
+            chmod +x pont
+            ./pont
 
             # Windows
-            # Extract supertunnel-windows-amd64.zip
-            # Run supertunnel.exe
+            # Extract pont-windows-amd64.zip
+            # Run pont.exe
             ```
 
   # Second job: Build binaries for all platforms
@@ -58,47 +57,47 @@ jobs:
             platform: linux-amd64
             goos: linux
             goarch: amd64
-            exe: supertunnel
+            exe: pont
 
           - os: ubuntu-latest
             platform: linux-arm64
             goos: linux
             goarch: arm64
-            exe: supertunnel
+            exe: pont
 
           - os: ubuntu-latest
             platform: linux-armv7
             goos: linux
             goarch: arm
             goarm: 7
-            exe: supertunnel
+            exe: pont
 
           - os: ubuntu-latest
             platform: linux-armv6
             goos: linux
             goarch: arm
             goarm: 6
-            exe: supertunnel
+            exe: pont
 
           # Windows builds
           - os: ubuntu-latest
             platform: windows-amd64
             goos: windows
             goarch: amd64
-            exe: supertunnel.exe
+            exe: pont.exe
 
           # macOS builds
           - os: macos-latest
             platform: darwin-amd64
             goos: darwin
             goarch: amd64
-            exe: supertunnel
+            exe: pont
 
           - os: macos-latest
             platform: darwin-arm64
             goos: darwin
             goarch: arm64
-            exe: supertunnel
+            exe: pont
 
     steps:
       - name: Checkout code
@@ -107,11 +106,11 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.24'
+          go-version: "1.25"
           check-latest: true
 
       - name: Get dependencies
-        run: go mod download
+        run: go mod tidy && go mod download
 
       - name: Run tests
         if: matrix.os == runner.os
@@ -127,9 +126,9 @@ jobs:
           BUILD_TIME=$(date -u '+%Y-%m-%d_%H:%M:%S_UTC')
           go build -v -trimpath \
             -ldflags="-s -w \
-              -X supertunnel/version.Version=${{ github.ref_name }} \
-              -X supertunnel/version.BuildTime=${BUILD_TIME} \
-              -X supertunnel/version.GitCommit=${{ github.sha }}" \
+              -X pont/version.Version=${{ github.ref_name }} \
+              -X pont/version.BuildTime=${BUILD_TIME} \
+              -X pont/version.GitCommit=${{ github.sha }}" \
             -o dist/${{ matrix.exe }} .
 
       - name: Run UPX
@@ -145,22 +144,22 @@ jobs:
         run: |
           cd dist
           if [ "${{ matrix.goos }}" = "windows" ]; then
-            zip supertunnel-${{ matrix.platform }}.zip ${{ matrix.exe }}
+            zip pont-${{ matrix.platform }}.zip ${{ matrix.exe }}
           else
-            tar czf supertunnel-${{ matrix.platform }}.tar.gz ${{ matrix.exe }}
+            tar czf pont-${{ matrix.platform }}.tar.gz ${{ matrix.exe }}
           fi
         shell: bash
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: supertunnel-${{ matrix.platform }}
-          path: dist/supertunnel-${{ matrix.platform }}.*
+          name: pont-${{ matrix.platform }}
+          path: dist/pont-${{ matrix.platform }}.*
           retention-days: 7
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/supertunnel-${{ matrix.platform }}.*
+          files: dist/pont-${{ matrix.platform }}.*
           # Don't generate release notes here - already done in create-release job
           draft: true
