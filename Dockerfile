@@ -14,14 +14,11 @@ RUN apk add --no-cache git ca-certificates tzdata
 # Set working directory
 WORKDIR /build
 
-# Copy go mod files
-COPY go.mod ./
+# Copy source code
+COPY . .
 
 # Tidy and download dependencies
 RUN go mod tidy && go mod download
-
-# Copy source code
-COPY . .
 
 # Build the application with embedded assets and inject version info
 RUN CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
