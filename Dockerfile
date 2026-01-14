@@ -15,7 +15,7 @@ RUN apk add --no-cache git ca-certificates tzdata
 WORKDIR /build
 
 # Copy go mod files
-COPY go.mod ./
+COPY go.mod go.sum ./
 
 # Download dependencies
 RUN go mod download
