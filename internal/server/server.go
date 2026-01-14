@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"net/http"
 	"pont/internal/config"
 	"pont/internal/logger"
 	"pont/internal/service"
+	"pont/internal/web"
 	"pont/version"
 	"time"
 
@@ -45,7 +47,8 @@ func (s *Server) Start() error {
 	mux.HandleFunc("/api/version", s.handleVersion)
 
 	// Static files
-	mux.Handle("/", http.FileServer(http.Dir("web/dist")))
+	distFS, _ := fs.Sub(web.DistFS, "dist")
+	mux.Handle("/", http.FileServer(http.FS(distFS)))
 
 	// Wrap with middleware
 	handler := s.loggingMiddleware(s.corsMiddleware(mux))

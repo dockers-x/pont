@@ -6,10 +6,10 @@ import (
 	"io"
 	"net/url"
 	"os"
-	"regexp"
-	"strings"
 	"pont/internal/config"
 	"pont/internal/logger"
+	"regexp"
+	"strings"
 	"sync"
 
 	"github.com/cloudflare/cloudflared/cmd/cloudflared/cliutil"
