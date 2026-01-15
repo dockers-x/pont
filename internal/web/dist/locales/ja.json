@@ -41,6 +41,7 @@
   "ui.modal.ngrok_authtoken": "Ngrok 認証トークン",
   "ui.modal.ngrok_authtoken_help": "認証トークンを取得する",
   "ui.modal.ngrok_domain": "Ngrok ドメイン（オプション）",
+  "ui.modal.ngrok_free_limit": "⚠️ 無料アカウント：1つのエンドポイントのみ許可",
   "ui.modal.enabled": "有効",
   "ui.modal.cancel": "キャンセル",
   "ui.modal.save": "保存",
@@ -54,6 +55,9 @@
   "ui.tunnel.delete": "削除",
   "ui.tunnel.running": "実行中",
   "ui.tunnel.stopped": "停止",
+  "ui.tunnel.error": "エラー",
+
+  "ui.error.ngrok_limit": "無料の ngrok アカウントは一度に1つのトンネルしか実行できません。他のトンネルを先に停止してください。",
 
   "ui.theme.toggle": "テーマを切り替え"
 }

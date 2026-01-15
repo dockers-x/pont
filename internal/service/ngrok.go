@@ -2,21 +2,21 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
-	"net/http"
-	"net/url"
 	"pont/internal/config"
 	"pont/internal/logger"
+	"strings"
 	"time"
 
-	"golang.ngrok.com/ngrok"
-	ngrokconfig "golang.ngrok.com/ngrok/config"
+	"golang.ngrok.com/ngrok/v2"
 )
 
 // NgrokService implements ngrok tunnel
 type NgrokService struct {
 	config    *config.TunnelConfig
-	tunnel    ngrok.Tunnel
+	agent     ngrok.Agent
+	forwarder ngrok.EndpointForwarder
 	publicURL string
 	status    string
 	lastError string
@@ -36,44 +36,53 @@ func NewNgrokService(cfg *config.TunnelConfig) *NgrokService {
 func (ns *NgrokService) Start(ctx context.Context) error {
 	ns.ctx, ns.cancel = context.WithCancel(ctx)
 
-	// Parse target URL
-	targetURL, err := url.Parse(ns.config.Target)
-	if err != nil {
-		return fmt.Errorf("invalid target URL: %w", err)
-	}
-
-	// Build tunnel config options
-	tunnelOpts := []ngrokconfig.HTTPEndpointOption{}
-
-	// Add custom domain if provided
-	if ns.config.NgrokDomain != "" {
-		tunnelOpts = append(tunnelOpts, ngrokconfig.WithDomain(ns.config.NgrokDomain))
-	}
-
-	// Create tunnel configuration
-	tunnelConfig := ngrokconfig.HTTPEndpoint(tunnelOpts...)
-
-	// Build connect options
-	connectOpts := []ngrok.ConnectOption{}
-
-	// Add authtoken if provided
+	// Create agent with authtoken
+	var agentOpts []ngrok.AgentOption
 	if ns.config.NgrokAuthtoken != "" {
-		connectOpts = append(connectOpts, ngrok.WithAuthtoken(ns.config.NgrokAuthtoken))
+		agentOpts = append(agentOpts, ngrok.WithAuthtoken(ns.config.NgrokAuthtoken))
 	}
 
-	logger.Sugar.Infof("Connecting to ngrok with authtoken: %s...", ns.config.NgrokAuthtoken[:min(10, len(ns.config.NgrokAuthtoken))])
+	agent, err := ngrok.NewAgent(agentOpts...)
+	if err != nil {
+		errMsg := fmt.Sprintf("Failed to create agent: %v", err)
+		ns.lastError = errMsg
+		ns.status = "error"
+		return fmt.Errorf("%s", errMsg)
+	}
+	ns.agent = agent
+
+	// Check protocol
+	if strings.HasPrefix(ns.config.Target, "tcp://") {
+		target := strings.TrimPrefix(ns.config.Target, "tcp://")
+		return ns.startTCP(target)
+	}
+	if strings.HasPrefix(ns.config.Target, "tls://") {
+		target := strings.TrimPrefix(ns.config.Target, "tls://")
+		return ns.startTLS(target)
+	}
+	return ns.startHTTP()
+}
+
+func (ns *NgrokService) startHTTP() error {
+	// Build endpoint options
+	var opts []ngrok.EndpointOption
+	if ns.config.NgrokDomain != "" {
+		opts = append(opts, ngrok.WithURL(ns.config.NgrokDomain))
+	}
+
+	logger.Sugar.Infof("Connecting to ngrok...")
 
 	// Create a channel to receive the result
 	type result struct {
-		tunnel ngrok.Tunnel
-		err    error
+		forwarder ngrok.EndpointForwarder
+		err       error
 	}
 	resultCh := make(chan result, 1)
 
 	// Start connection in a goroutine with timeout
 	go func() {
-		tunnel, err := ngrok.Listen(ns.ctx, tunnelConfig, connectOpts...)
-		resultCh <- result{tunnel: tunnel, err: err}
+		forwarder, err := ns.agent.Forward(ns.ctx, ngrok.WithUpstream(ns.config.Target), opts...)
+		resultCh <- result{forwarder: forwarder, err: err}
 	}()
 
 	// Wait for result or timeout
@@ -81,69 +90,123 @@ func (ns *NgrokService) Start(ctx context.Context) error {
 	case res := <-resultCh:
 		if res.err != nil {
 			errMsg := fmt.Sprintf("Failed to start tunnel: %v", res.err)
+			// Check if it's ngrok error with code
+			var ngrokErr ngrok.Error
+			if errors.As(res.err, &ngrokErr) && ngrokErr.Code() == "ERR_NGROK_108" {
+				errMsg = "Free ngrok accounts can only run one tunnel at a time. Please stop other tunnels first."
+			}
 			ns.lastError = errMsg
 			ns.status = "error"
 			logger.Sugar.Errorf("Ngrok connection failed: %v", res.err)
-			return fmt.Errorf(errMsg)
+			return fmt.Errorf("%s", errMsg)
 		}
-		ns.tunnel = res.tunnel
-		ns.publicURL = res.tunnel.URL()
+		ns.forwarder = res.forwarder
+		ns.publicURL = res.forwarder.URL().String()
 		ns.status = "running"
 		logger.Sugar.Infof("Ngrok tunnel created: %s -> %s", ns.publicURL, ns.config.Target)
 	case <-time.After(30 * time.Second):
-		errMsg := "Ngrok connection timeout after 30 seconds. Please check your network connection and authtoken."
+		errMsg := "Ngrok connection timeout. Possible causes: 1) Network issue 2) Invalid authtoken 3) Free account limit: only 1 endpoint allowed, please stop other tunnels first"
 		ns.lastError = errMsg
 		ns.status = "error"
 		logger.Sugar.Error(errMsg)
 		if ns.cancel != nil {
 			ns.cancel()
 		}
-		return fmt.Errorf(errMsg)
+		return fmt.Errorf("%s", errMsg)
 	}
 
-	// Start HTTP server to forward requests
+	return nil
+}
+
+func (ns *NgrokService) startTCP(target string) error {
+	logger.Sugar.Infof("Connecting to ngrok (TCP)...")
+
+	// Create a channel to receive the result
+	type result struct {
+		forwarder ngrok.EndpointForwarder
+		err       error
+	}
+	resultCh := make(chan result, 1)
+
+	// Start connection in a goroutine with timeout
 	go func() {
-		// Create HTTP client to forward requests to target
-		client := &http.Client{}
-
-		handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			// Build target URL
-			targetReq := r.Clone(ns.ctx)
-			targetReq.URL.Scheme = targetURL.Scheme
-			targetReq.URL.Host = targetURL.Host
-			targetReq.RequestURI = ""
-
-			// Forward request
-			resp, err := client.Do(targetReq)
-			if err != nil {
-				logger.Sugar.Errorf("Error forwarding request: %v", err)
-				http.Error(w, "Bad Gateway", http.StatusBadGateway)
-				return
-			}
-			defer resp.Body.Close()
-
-			// Copy response headers
-			for key, values := range resp.Header {
-				for _, value := range values {
-					w.Header().Add(key, value)
-				}
-			}
-
-			// Copy status code
-			w.WriteHeader(resp.StatusCode)
-
-			// Copy body
-			if _, err := w.Write([]byte{}); err != nil {
-				logger.Sugar.Errorf("Error writing response: %v", err)
-			}
-		})
-
-		if err := http.Serve(ns.tunnel, handler); err != nil {
-			if ns.ctx.Err() == nil {
-				logger.Sugar.Errorf("Ngrok HTTP server error: %v", err)
-			}
-		}
+		forwarder, err := ns.agent.Forward(ns.ctx, ngrok.WithUpstream("tcp://"+target), ngrok.WithURL("tcp://"))
+		resultCh <- result{forwarder: forwarder, err: err}
 	}()
+
+	// Wait for result or timeout
+	select {
+	case res := <-resultCh:
+		if res.err != nil {
+			errMsg := fmt.Sprintf("Failed to start TCP tunnel: %v", res.err)
+			var ngrokErr ngrok.Error
+			if errors.As(res.err, &ngrokErr) && ngrokErr.Code() == "ERR_NGROK_108" {
+				errMsg = "Free ngrok accounts can only run one tunnel at a time. Please stop other tunnels first."
+			}
+			ns.lastError = errMsg
+			ns.status = "error"
+			logger.Sugar.Errorf("Ngrok TCP connection failed: %v", res.err)
+			return fmt.Errorf("%s", errMsg)
+		}
+		ns.forwarder = res.forwarder
+		ns.publicURL = res.forwarder.URL().String()
+		ns.status = "running"
+		logger.Sugar.Infof("Ngrok TCP tunnel created: %s -> %s", ns.publicURL, target)
+	case <-time.After(30 * time.Second):
+		errMsg := "Ngrok TCP connection timeout. Possible causes: 1) Network issue 2) Invalid authtoken 3) Free account limit: only 1 endpoint allowed, please stop other tunnels first"
+		ns.lastError = errMsg
+		ns.status = "error"
+		logger.Sugar.Error(errMsg)
+		if ns.cancel != nil {
+			ns.cancel()
+		}
+		return fmt.Errorf("%s", errMsg)
+	}
+
+	return nil
+}
+
+func (ns *NgrokService) startTLS(target string) error {
+	logger.Sugar.Infof("Connecting to ngrok (TLS)...")
+
+	type result struct {
+		forwarder ngrok.EndpointForwarder
+		err       error
+	}
+	resultCh := make(chan result, 1)
+
+	go func() {
+		forwarder, err := ns.agent.Forward(ns.ctx, ngrok.WithUpstream("tls://"+target), ngrok.WithURL("tls://"))
+		resultCh <- result{forwarder: forwarder, err: err}
+	}()
+
+	select {
+	case res := <-resultCh:
+		if res.err != nil {
+			errMsg := fmt.Sprintf("Failed to start TLS tunnel: %v", res.err)
+			var ngrokErr ngrok.Error
+			if errors.As(res.err, &ngrokErr) && ngrokErr.Code() == "ERR_NGROK_108" {
+				errMsg = "Free ngrok accounts can only run one tunnel at a time. Please stop other tunnels first."
+			}
+			ns.lastError = errMsg
+			ns.status = "error"
+			logger.Sugar.Errorf("Ngrok TLS connection failed: %v", res.err)
+			return fmt.Errorf("%s", errMsg)
+		}
+		ns.forwarder = res.forwarder
+		ns.publicURL = res.forwarder.URL().String()
+		ns.status = "running"
+		logger.Sugar.Infof("Ngrok TLS tunnel created: %s -> %s", ns.publicURL, target)
+	case <-time.After(30 * time.Second):
+		errMsg := "Ngrok TLS connection timeout. Possible causes: 1) Network issue 2) Invalid authtoken 3) Free account limit: only 1 endpoint allowed, please stop other tunnels first"
+		ns.lastError = errMsg
+		ns.status = "error"
+		logger.Sugar.Error(errMsg)
+		if ns.cancel != nil {
+			ns.cancel()
+		}
+		return fmt.Errorf("%s", errMsg)
+	}
 
 	return nil
 }
@@ -154,13 +217,13 @@ func (ns *NgrokService) Stop() error {
 		ns.cancel()
 	}
 
-	if ns.tunnel != nil {
-		if err := ns.tunnel.Close(); err != nil {
-			return fmt.Errorf("failed to close ngrok tunnel: %w", err)
-		}
+	ns.status = "stopped"
+	ns.publicURL = ""
+
+	if ns.forwarder != nil {
+		ns.forwarder.Close()
 	}
 
-	ns.status = "stopped"
 	return nil
 }
 

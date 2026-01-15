@@ -21,6 +21,7 @@ const elements = {
     tunnelForm: document.getElementById('tunnel-form'),
     modalTitle: document.getElementById('modal-title'),
     tunnelType: document.getElementById('tunnel-type'),
+    tunnelProtocol: document.getElementById('tunnel-protocol'),
     ngrokFields: document.getElementById('ngrok-fields'),
     languageSelector: document.getElementById('language-selector')
 };
@@ -196,7 +197,14 @@ function updateTunnelStatuses() {
         if (status.error) {
             const errorDiv = document.createElement('div');
             errorDiv.className = 'log-entry error';
-            errorDiv.textContent = status.error;
+            // Check if it's ngrok free account limit error
+            if (status.error.includes('Free ngrok accounts can only run one tunnel') ||
+                status.error.includes('only 1 endpoint allowed') ||
+                status.error.includes('Free account limit')) {
+                errorDiv.textContent = i18n.t('ui.error.ngrok_limit');
+            } else {
+                errorDiv.textContent = status.error;
+            }
             info.appendChild(errorDiv);
         }
     });
@@ -248,8 +256,26 @@ function editTunnel(id) {
     elements.modalTitle.textContent = i18n.t('ui.modal.edit_tunnel');
     document.getElementById('tunnel-name').value = tunnel.name;
     document.getElementById('tunnel-type').value = tunnel.type;
-    document.getElementById('tunnel-target').value = tunnel.target;
     document.getElementById('tunnel-enabled').checked = tunnel.enabled;
+
+    // Parse protocol and target
+    let protocol = 'http://';
+    let target = tunnel.target;
+    if (target.startsWith('https://')) {
+        protocol = 'https://';
+        target = target.substring(8);
+    } else if (target.startsWith('http://')) {
+        protocol = 'http://';
+        target = target.substring(7);
+    } else if (target.startsWith('tcp://')) {
+        protocol = 'tcp://';
+        target = target.substring(6);
+    } else if (target.startsWith('tls://')) {
+        protocol = 'tls://';
+        target = target.substring(6);
+    }
+    elements.tunnelProtocol.value = protocol;
+    document.getElementById('tunnel-target').value = target;
 
     const authtokenInput = document.getElementById('ngrok-authtoken');
     const authtokenRequired = document.getElementById('ngrok-authtoken-required');
@@ -285,6 +311,7 @@ function openAddTunnelModal() {
     state.editingTunnelId = null;
     elements.modalTitle.textContent = i18n.t('ui.modal.add_tunnel');
     elements.tunnelForm.reset();
+    elements.tunnelProtocol.value = 'http://';
     elements.ngrokFields.style.display = 'none';
     const authtokenInput = document.getElementById('ngrok-authtoken');
     const authtokenRequired = document.getElementById('ngrok-authtoken-required');
@@ -302,10 +329,14 @@ function closeModal() {
 async function saveTunnel(e) {
     e.preventDefault();
 
+    const protocol = elements.tunnelProtocol.value;
+    const targetInput = document.getElementById('tunnel-target').value;
+    const target = protocol + targetInput;
+
     const tunnel = {
         name: document.getElementById('tunnel-name').value,
         type: document.getElementById('tunnel-type').value,
-        target: document.getElementById('tunnel-target').value,
+        target: target,
         enabled: document.getElementById('tunnel-enabled').checked
     };
 

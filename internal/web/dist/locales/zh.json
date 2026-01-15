@@ -41,6 +41,7 @@
   "ui.modal.ngrok_authtoken": "Ngrok 认证令牌",
   "ui.modal.ngrok_authtoken_help": "从以下位置获取您的认证令牌",
   "ui.modal.ngrok_domain": "Ngrok 域名（可选）",
+  "ui.modal.ngrok_free_limit": "⚠️ 免费账户：仅允许 1 个端点",
   "ui.modal.enabled": "已启用",
   "ui.modal.cancel": "取消",
   "ui.modal.save": "保存",
@@ -54,6 +55,9 @@
   "ui.tunnel.delete": "删除",
   "ui.tunnel.running": "运行中",
   "ui.tunnel.stopped": "已停止",
+  "ui.tunnel.error": "错误",
+
+  "ui.error.ngrok_limit": "免费 ngrok 账户一次只能运行一个隧道。请先停止其他隧道。",
 
   "ui.theme.toggle": "切换主题"
 }

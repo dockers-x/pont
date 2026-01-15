@@ -41,6 +41,7 @@
   "ui.modal.ngrok_authtoken": "Ngrok Auth Token",
   "ui.modal.ngrok_authtoken_help": "Get your authtoken from",
   "ui.modal.ngrok_domain": "Ngrok Domain (optional)",
+  "ui.modal.ngrok_free_limit": "⚠️ Free accounts: only 1 endpoint allowed",
   "ui.modal.enabled": "Enabled",
   "ui.modal.cancel": "Cancel",
   "ui.modal.save": "Save",
@@ -54,6 +55,9 @@
   "ui.tunnel.delete": "Delete",
   "ui.tunnel.running": "Running",
   "ui.tunnel.stopped": "Stopped",
+  "ui.tunnel.error": "Error",
+
+  "ui.error.ngrok_limit": "Free ngrok accounts can only run one tunnel at a time. Please stop other tunnels first.",
 
   "ui.theme.toggle": "Toggle Theme"
 }
