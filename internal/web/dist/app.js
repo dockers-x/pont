@@ -126,10 +126,10 @@ function renderTunnels() {
                 <div class="tunnel-info">
                     <div class="tunnel-header">
                         <span class="tunnel-name">${tunnel.name}</span>
-                        <span class="tunnel-type">${tunnel.type}</span>
+                        <span class=\"tunnel-type\" data-type="${tunnel.type}">${tunnel.type}</span>
                     </div>
                     <div class="tunnel-target">${tunnel.target}</div>
-                    ${status.public_url ? `<a href="${status.public_url}" target="_blank" rel="noopener noreferrer" class="tunnel-url">${status.public_url}</a>` : ''}
+                    ${status.public_url ? `<div class="tunnel-url"><a href="${status.public_url}" target="_blank" rel="noopener noreferrer">${status.public_url}</a><button class="copy-url-btn" onclick="copyUrl('${status.public_url}', event)">Copy</button></div>` : ''}
                     ${status.error ? `<div class="log-entry error">${status.error}</div>` : ''}
                 </div>
                 <div class="tunnel-actions">
@@ -174,13 +174,23 @@ function updateTunnelStatuses() {
         if (existingError) existingError.remove();
 
         if (status.public_url) {
+            const urlContainer = document.createElement('div');
+            urlContainer.className = 'tunnel-url';
+
             const urlLink = document.createElement('a');
-            urlLink.className = 'tunnel-url';
             urlLink.href = status.public_url;
             urlLink.target = '_blank';
             urlLink.rel = 'noopener noreferrer';
             urlLink.textContent = status.public_url;
-            info.appendChild(urlLink);
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'copy-url-btn';
+            copyBtn.textContent = 'Copy';
+            copyBtn.onclick = (e) => copyUrl(status.public_url, e);
+
+            urlContainer.appendChild(urlLink);
+            urlContainer.appendChild(copyBtn);
+            info.appendChild(urlContainer);
         }
 
         if (status.error) {
@@ -211,6 +221,22 @@ async function stopTunnel(id) {
         await fetchStatuses();
     } catch (err) {
         addLog(`Failed to stop tunnel: ${err.message}`, 'error');
+    }
+}
+
+async function copyUrl(url, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    try {
+        await navigator.clipboard.writeText(url);
+        const btn = event.target;
+        const originalText = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => {
+            btn.textContent = originalText;
+        }, 2000);
+    } catch (err) {
+        console.error('Failed to copy:', err);
     }
 }
 
