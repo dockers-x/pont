@@ -122,29 +122,50 @@ function renderTunnels() {
     elements.tunnelsList.innerHTML = state.tunnels.map(tunnel => {
         const status = state.statuses[tunnel.id] || { status: 'stopped' };
         const statusText = status.status === 'running' ? i18n.t('ui.tunnel.running') : i18n.t('ui.tunnel.stopped');
+        const publicUrlHtml = status.public_url ?
+            `<div class="tunnel-url"><a href="${status.public_url}" target="_blank" rel="noopener noreferrer">${status.public_url}</a><button class="copy-url-btn" data-url="${status.public_url}">Copy</button></div>` : '';
+        const errorHtml = status.error ? `<div class="log-entry error">${status.error}</div>` : '';
+        const actionBtn = status.status === 'running' ?
+            `<button class="btn btn-danger btn-sm" data-action="stop">${i18n.t('ui.tunnel.stop')}</button>` :
+            `<button class="btn btn-success btn-sm" data-action="start">${i18n.t('ui.tunnel.start')}</button>`;
+
         return `
             <div class="tunnel-item" data-id="${tunnel.id}">
                 <div class="tunnel-info">
                     <div class="tunnel-header">
                         <span class="tunnel-name">${tunnel.name}</span>
-                        <span class=\"tunnel-type\" data-type="${tunnel.type}">${tunnel.type}</span>
+                        <span class="tunnel-type" data-type="${tunnel.type}">${tunnel.type}</span>
                     </div>
                     <div class="tunnel-target">${tunnel.target}</div>
-                    ${status.public_url ? `<div class="tunnel-url"><a href="${status.public_url}" target="_blank" rel="noopener noreferrer">${status.public_url}</a><button class="copy-url-btn" onclick="copyUrl('${status.public_url}', event)">Copy</button></div>` : ''}
-                    ${status.error ? `<div class="log-entry error">${status.error}</div>` : ''}
+                    ${publicUrlHtml}
+                    ${errorHtml}
                 </div>
                 <div class="tunnel-actions">
                     <div class="status-indicator ${status.status}" title="${statusText}"></div>
-                    ${status.status === 'running' ?
-                        `<button class="btn btn-danger btn-sm" onclick="stopTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.stop')}</button>` :
-                        `<button class="btn btn-success btn-sm" onclick="startTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.start')}</button>`
-                    }
-                    <button class="btn btn-ghost btn-sm" onclick="editTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.edit')}</button>
-                    <button class="btn btn-ghost btn-sm" onclick="deleteTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.delete')}</button>
+                    ${actionBtn}
+                    <button class="btn btn-ghost btn-sm" data-action="edit">${i18n.t('ui.tunnel.edit')}</button>
+                    <button class="btn btn-ghost btn-sm" data-action="delete">${i18n.t('ui.tunnel.delete')}</button>
                 </div>
             </div>
         `;
     }).join('');
+
+    // Event delegation for tunnel buttons
+    document.querySelectorAll('.tunnel-item').forEach(item => {
+        const id = item.dataset.id;
+        item.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action;
+                if (action === 'start') startTunnel(id);
+                else if (action === 'stop') stopTunnel(id);
+                else if (action === 'edit') editTunnel(id);
+                else if (action === 'delete') deleteTunnel(id);
+            });
+        });
+        item.querySelectorAll('.copy-url-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => copyUrl(btn.dataset.url, e));
+        });
+    });
 }
 
 function updateTunnelStatuses() {
@@ -157,15 +178,27 @@ function updateTunnelStatuses() {
 
         const actions = item.querySelector('.tunnel-actions');
         const buttons = status.status === 'running' ?
-            `<button class="btn btn-danger btn-sm" onclick="stopTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.stop')}</button>` :
-            `<button class="btn btn-success btn-sm" onclick="startTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.start')}</button>`;
+            `<button class="btn btn-danger btn-sm" data-action="stop">${i18n.t('ui.tunnel.stop')}</button>` :
+            `<button class="btn btn-success btn-sm" data-action="start">${i18n.t('ui.tunnel.start')}</button>`;
 
         actions.innerHTML = `
             <div class="status-indicator ${status.status}" title="${statusText}"></div>
             ${buttons}
-            <button class="btn btn-ghost btn-sm" onclick="editTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.edit')}</button>
-            <button class="btn btn-ghost btn-sm" onclick="deleteTunnel('${tunnel.id}')">${i18n.t('ui.tunnel.delete')}</button>
+            <button class="btn btn-ghost btn-sm" data-action="edit">${i18n.t('ui.tunnel.edit')}</button>
+            <button class="btn btn-ghost btn-sm" data-action="delete">${i18n.t('ui.tunnel.delete')}</button>
         `;
+
+        // Re-attach event listeners
+        const id = tunnel.id;
+        actions.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const action = btn.dataset.action;
+                if (action === 'start') startTunnel(id);
+                else if (action === 'stop') stopTunnel(id);
+                else if (action === 'edit') editTunnel(id);
+                else if (action === 'delete') deleteTunnel(id);
+            });
+        });
 
         const info = item.querySelector('.tunnel-info');
         const existingUrl = info.querySelector('.tunnel-url');
@@ -214,7 +247,7 @@ async function startTunnel(id) {
     try {
         const res = await fetch(`${API_BASE}/tunnels/${id}/start`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        addLog(`Starting tunnel ${id}...`, 'info');
+        addLog(`Starting tunnel ${id}…`, 'info');
         await fetchStatuses();
     } catch (err) {
         addLog(`Failed to start tunnel: ${err.message}`, 'error');
@@ -225,7 +258,7 @@ async function stopTunnel(id) {
     try {
         const res = await fetch(`${API_BASE}/tunnels/${id}/stop`, { method: 'POST' });
         if (!res.ok) throw new Error(await res.text());
-        addLog(`Stopping tunnel ${id}...`, 'info');
+        addLog(`Stopping tunnel ${id}…`, 'info');
         await fetchStatuses();
     } catch (err) {
         addLog(`Failed to stop tunnel: ${err.message}`, 'error');
@@ -304,7 +337,7 @@ function editTunnel(id) {
 }
 
 async function deleteTunnel(id) {
-    if (!confirm('Are you sure you want to delete this tunnel?')) return;
+    if (!confirm(i18n.t('ui.confirm_delete') || 'Are you sure you want to delete this tunnel?')) return;
 
     try {
         const res = await fetch(`${API_BASE}/tunnels/${id}`, { method: 'DELETE' });
@@ -339,7 +372,8 @@ async function saveTunnel(e) {
     e.preventDefault();
 
     const protocol = elements.tunnelProtocol.value;
-    const targetInput = document.getElementById('tunnel-target').value;
+    let targetInput = document.getElementById('tunnel-target').value.trim();
+    targetInput = targetInput.replace(/^(https?|tcp|tls):\/\//, '');
     const target = protocol + targetInput;
 
     const tunnel = {
@@ -392,7 +426,7 @@ function connectLogStream() {
         };
 
         state.logStream.onerror = () => {
-            addLog('Log stream disconnected', 'error');
+            addLog(i18n.t('ui.log_stream_disconnected') || 'Log stream disconnected', 'error');
             state.isStreamConnected = false;
             elements.toggleStreamBtn.textContent = i18n.t('ui.enable_realtime_logs');
             if (state.logStream) {
@@ -403,7 +437,7 @@ function connectLogStream() {
 
         state.isStreamConnected = true;
         elements.toggleStreamBtn.textContent = i18n.t('ui.disable_realtime_logs');
-        addLog('Log stream connected', 'system');
+        addLog(i18n.t('ui.log_stream_connected') || 'Log stream connected', 'system');
     } catch (err) {
         addLog(`Failed to connect log stream: ${err.message}`, 'error');
     }
@@ -416,7 +450,7 @@ function disconnectLogStream() {
     }
     state.isStreamConnected = false;
     elements.toggleStreamBtn.textContent = i18n.t('ui.enable_realtime_logs');
-    addLog('Log stream disconnected', 'system');
+    addLog(i18n.t('ui.log_stream_disconnected') || 'Log stream disconnected', 'system');
 }
 
 function toggleLogStream() {
@@ -437,7 +471,7 @@ function addLog(message, level = 'info') {
 
 function clearLogs() {
     elements.logsContainer.innerHTML = '';
-    addLog('Logs cleared', 'system');
+    addLog(i18n.t('ui.logs_cleared') || 'Logs cleared', 'system');
 }
 
 elements.themeToggle.addEventListener('click', toggleTheme);
@@ -505,10 +539,5 @@ document.getElementById('toggle-authtoken').addEventListener('click', () => {
 elements.tunnelModal.addEventListener('click', (e) => {
     if (e.target === elements.tunnelModal) closeModal();
 });
-
-window.startTunnel = startTunnel;
-window.stopTunnel = stopTunnel;
-window.editTunnel = editTunnel;
-window.deleteTunnel = deleteTunnel;
 
 init();

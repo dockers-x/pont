@@ -112,7 +112,7 @@ body {
     border-color: var(--text-secondary);
 }
 
-.language-selector:focus {
+.language-selector:focus-visible {
     outline: none;
     border-color: var(--google-blue);
     box-shadow: var(--input-focus-shadow);
@@ -279,7 +279,7 @@ body {
     color: var(--text-secondary);
     font-size: 0.75rem;
     cursor: pointer;
-    transition: all 0.15s;
+    transition: border-color 0.15s, color 0.15s, transform 0.15s;
 }
 
 .copy-url-btn:hover {
@@ -319,7 +319,7 @@ body {
     cursor: pointer;
     border: none;
     font-size: 0.8125rem;
-    transition: opacity 0.15s;
+    transition: opacity 0.15s, border-color 0.15s, color 0.15s;
 }
 
 .btn-primary {
@@ -544,7 +544,7 @@ body {
     align-items: center;
     justify-content: center;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition: color 0.2s, background 0.2s;
 }
 
 .password-toggle:hover {
@@ -587,8 +587,8 @@ body {
     transition: border-color 0.15s;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form-group input:focus-visible,
+.form-group select:focus-visible {
     outline: none;
     border-color: var(--google-blue);
     box-shadow: var(--input-focus-shadow);

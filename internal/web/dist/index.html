@@ -20,6 +20,7 @@
                     <h1>Pont</h1>
                 </div>
                 <div class="header-controls">
+                    <span class="version-info" id="version-info">Loading…</span>
                     <label for="language-selector" class="visually-hidden"
                         >Language</label
                     >
@@ -45,6 +46,7 @@
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
+                            aria-hidden="true"
                         >
                             <circle cx="12" cy="12" r="5"></circle>
                             <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -84,6 +86,7 @@
                             fill="none"
                             stroke="currentColor"
                             stroke-width="2"
+                            aria-hidden="true"
                         >
                             <path
                                 d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"
@@ -91,7 +94,6 @@
                         </svg>
                     </button>
                 </div>
-                <span class="version-info" id="version-info">Loading…</span>
             </header>
 
             <main class="main-content">
@@ -197,6 +199,7 @@
                                 <span class="required">*</span></label
                             >
                             <div style="display: flex; gap: 8px;">
+                                <label for="tunnel-protocol" class="visually-hidden">Protocol</label>
                                 <select
                                     id="tunnel-protocol"
                                     class="form-select"
