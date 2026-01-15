@@ -286,9 +286,18 @@ function editTunnel(id) {
         authtokenInput.required = true;
         if (authtokenRequired) authtokenRequired.style.display = 'inline';
         document.getElementById('ngrok-domain').value = tunnel.ngrok_domain || '';
+        Array.from(elements.tunnelProtocol.options).forEach(opt => {
+            opt.disabled = false;
+        });
     } else {
         authtokenInput.required = false;
         if (authtokenRequired) authtokenRequired.style.display = 'none';
+        // Cloudflare only supports HTTP/HTTPS
+        if (tunnel.type === 'cloudflare') {
+            Array.from(elements.tunnelProtocol.options).forEach(opt => {
+                opt.disabled = opt.value === 'tcp://' || opt.value === 'tls://';
+            });
+        }
     }
 
     elements.tunnelModal.classList.add('active');
@@ -448,12 +457,29 @@ elements.languageSelector.addEventListener('change', async (e) => {
 
 elements.tunnelType.addEventListener('change', (e) => {
     const isNgrok = e.target.value === 'ngrok';
+    const isCloudflare = e.target.value === 'cloudflare';
+
     elements.ngrokFields.style.display = isNgrok ? 'block' : 'none';
     const authtokenInput = document.getElementById('ngrok-authtoken');
     const authtokenRequired = document.getElementById('ngrok-authtoken-required');
     authtokenInput.required = isNgrok;
     if (authtokenRequired) {
         authtokenRequired.style.display = isNgrok ? 'inline' : 'none';
+    }
+
+    // Cloudflare only supports HTTP/HTTPS
+    if (isCloudflare) {
+        const protocol = elements.tunnelProtocol.value;
+        if (protocol === 'tcp://' || protocol === 'tls://') {
+            elements.tunnelProtocol.value = 'http://';
+        }
+        Array.from(elements.tunnelProtocol.options).forEach(opt => {
+            opt.disabled = opt.value === 'tcp://' || opt.value === 'tls://';
+        });
+    } else {
+        Array.from(elements.tunnelProtocol.options).forEach(opt => {
+            opt.disabled = false;
+        });
     }
 });
 
