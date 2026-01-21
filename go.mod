@@ -9,7 +9,7 @@ require (
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
 	github.com/prometheus/client_golang v1.22.0
 	github.com/urfave/cli/v2 v2.3.0
-	go.uber.org/zap v1.27.0
+	go.uber.org/zap v1.27.1
 	golang.ngrok.com/ngrok/v2 v2.1.1
 	golang.org/x/text v0.33.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
