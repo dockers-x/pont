@@ -263,8 +263,8 @@ func (c *SettingClient) Update() *SettingUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *SettingClient) UpdateOne(s *Setting) *SettingUpdateOne {
-	mutation := newSettingMutation(c.config, OpUpdateOne, withSetting(s))
+func (c *SettingClient) UpdateOne(_m *Setting) *SettingUpdateOne {
+	mutation := newSettingMutation(c.config, OpUpdateOne, withSetting(_m))
 	return &SettingUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -281,8 +281,8 @@ func (c *SettingClient) Delete() *SettingDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *SettingClient) DeleteOne(s *Setting) *SettingDeleteOne {
-	return c.DeleteOneID(s.ID)
+func (c *SettingClient) DeleteOne(_m *Setting) *SettingDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
@@ -396,8 +396,8 @@ func (c *TunnelClient) Update() *TunnelUpdate {
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *TunnelClient) UpdateOne(t *Tunnel) *TunnelUpdateOne {
-	mutation := newTunnelMutation(c.config, OpUpdateOne, withTunnel(t))
+func (c *TunnelClient) UpdateOne(_m *Tunnel) *TunnelUpdateOne {
+	mutation := newTunnelMutation(c.config, OpUpdateOne, withTunnel(_m))
 	return &TunnelUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
@@ -414,8 +414,8 @@ func (c *TunnelClient) Delete() *TunnelDelete {
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *TunnelClient) DeleteOne(t *Tunnel) *TunnelDeleteOne {
-	return c.DeleteOneID(t.ID)
+func (c *TunnelClient) DeleteOne(_m *Tunnel) *TunnelDeleteOne {
+	return c.DeleteOneID(_m.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.

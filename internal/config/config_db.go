@@ -22,13 +22,14 @@ const (
 
 // TunnelConfig represents a single tunnel configuration
 type TunnelConfig struct {
-	ID        string     `json:"id"`
-	Name      string     `json:"name"`
-	Type      TunnelType `json:"type"`
-	Target    string     `json:"target"`
-	Enabled   bool       `json:"enabled"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
+	ID         string     `json:"id"`
+	Name       string     `json:"name"`
+	Type       TunnelType `json:"type"`
+	Target     string     `json:"target"`
+	Enabled    bool       `json:"enabled"`
+	MCPEnabled bool       `json:"mcp_enabled"`
+	CreatedAt  time.Time  `json:"created_at"`
+	UpdatedAt  time.Time  `json:"updated_at"`
 
 	// Ngrok-specific fields
 	NgrokAuthtoken string `json:"ngrok_authtoken,omitempty"`
@@ -72,6 +73,7 @@ func (m *Manager) GetAllTunnels() ([]TunnelConfig, error) {
 			Type:           TunnelType(t.Type),
 			Target:         t.Target,
 			Enabled:        t.Enabled,
+			MCPEnabled:     t.McpEnabled,
 			CreatedAt:      t.CreatedAt,
 			UpdatedAt:      t.UpdatedAt,
 			NgrokAuthtoken: stringPtrToString(t.NgrokAuthtoken),
@@ -106,6 +108,7 @@ func (m *Manager) GetTunnel(id string) (*TunnelConfig, error) {
 		Type:           TunnelType(t.Type),
 		Target:         t.Target,
 		Enabled:        t.Enabled,
+		MCPEnabled:     t.McpEnabled,
 		CreatedAt:      t.CreatedAt,
 		UpdatedAt:      t.UpdatedAt,
 		NgrokAuthtoken: stringPtrToString(t.NgrokAuthtoken),
@@ -139,7 +142,8 @@ func (m *Manager) AddTunnel(tunnelCfg *TunnelConfig) error {
 		SetName(tunnelCfg.Name).
 		SetType(tunnel.Type(tunnelCfg.Type)).
 		SetTarget(tunnelCfg.Target).
-		SetEnabled(tunnelCfg.Enabled)
+		SetEnabled(tunnelCfg.Enabled).
+		SetMcpEnabled(tunnelCfg.MCPEnabled)
 
 	if tunnelCfg.NgrokAuthtoken != "" {
 		builder.SetNillableNgrokAuthtoken(&tunnelCfg.NgrokAuthtoken)
@@ -177,7 +181,8 @@ func (m *Manager) UpdateTunnel(id string, tunnelCfg *TunnelConfig) error {
 		SetName(tunnelCfg.Name).
 		SetType(tunnel.Type(tunnelCfg.Type)).
 		SetTarget(tunnelCfg.Target).
-		SetEnabled(tunnelCfg.Enabled)
+		SetEnabled(tunnelCfg.Enabled).
+		SetMcpEnabled(tunnelCfg.MCPEnabled)
 
 	if tunnelCfg.NgrokAuthtoken != "" {
 		builder.SetNillableNgrokAuthtoken(&tunnelCfg.NgrokAuthtoken)

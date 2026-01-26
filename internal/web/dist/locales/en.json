@@ -43,6 +43,8 @@
   "ui.modal.ngrok_domain": "Ngrok Domain (optional)",
   "ui.modal.ngrok_free_limit": "⚠️ Free accounts: only 1 endpoint allowed",
   "ui.modal.enabled": "Enabled",
+  "ui.modal.mcp_enabled": "Allow MCP Management",
+  "ui.modal.mcp_enabled_help": "Allow AI models to manage this tunnel via MCP",
   "ui.modal.cancel": "Cancel",
   "ui.modal.save": "Save",
 
@@ -59,5 +61,24 @@
 
   "ui.error.ngrok_limit": "Free ngrok accounts can only run one tunnel at a time. Please stop other tunnels first.",
 
-  "ui.theme.toggle": "Toggle Theme"
+  "ui.theme.toggle": "Toggle Theme",
+
+  "mcp.title": "MCP Integration",
+  "mcp.subtitle": "Model Context Protocol",
+  "mcp.description": "Pont supports MCP (Model Context Protocol), allowing AI models to manage tunnels programmatically.",
+  "mcp.endpoint": "MCP Endpoint",
+  "mcp.endpoint_url": "Endpoint URL",
+  "mcp.status": "Status",
+  "mcp.status_active": "Active",
+  "mcp.status_inactive": "Inactive",
+  "mcp.available_tools": "Available Tools",
+  "mcp.tool.list_tunnels": "List Tunnels",
+  "mcp.tool.list_tunnels_desc": "List all available tunnel configurations with their current status",
+  "mcp.tool.start_tunnel": "Start Tunnel",
+  "mcp.tool.start_tunnel_desc": "Start a specific tunnel by ID and get the public URL",
+  "mcp.usage": "Usage",
+  "mcp.usage_desc": "Configure your AI client to connect to the MCP endpoint above. The AI can then manage tunnels on your behalf.",
+  "mcp.config_example": "Configuration Example",
+  "mcp.security_note": "Security Note",
+  "mcp.security_desc": "The MCP endpoint is accessible on your local network. Ensure proper network security measures are in place."
 }

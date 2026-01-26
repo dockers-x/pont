@@ -23,127 +23,141 @@ type TunnelUpdate struct {
 }
 
 // Where appends a list predicates to the TunnelUpdate builder.
-func (tu *TunnelUpdate) Where(ps ...predicate.Tunnel) *TunnelUpdate {
-	tu.mutation.Where(ps...)
-	return tu
+func (_u *TunnelUpdate) Where(ps ...predicate.Tunnel) *TunnelUpdate {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // SetName sets the "name" field.
-func (tu *TunnelUpdate) SetName(s string) *TunnelUpdate {
-	tu.mutation.SetName(s)
-	return tu
+func (_u *TunnelUpdate) SetName(v string) *TunnelUpdate {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableName(s *string) *TunnelUpdate {
-	if s != nil {
-		tu.SetName(*s)
+func (_u *TunnelUpdate) SetNillableName(v *string) *TunnelUpdate {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return tu
+	return _u
 }
 
 // SetType sets the "type" field.
-func (tu *TunnelUpdate) SetType(t tunnel.Type) *TunnelUpdate {
-	tu.mutation.SetType(t)
-	return tu
+func (_u *TunnelUpdate) SetType(v tunnel.Type) *TunnelUpdate {
+	_u.mutation.SetType(v)
+	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableType(t *tunnel.Type) *TunnelUpdate {
-	if t != nil {
-		tu.SetType(*t)
+func (_u *TunnelUpdate) SetNillableType(v *tunnel.Type) *TunnelUpdate {
+	if v != nil {
+		_u.SetType(*v)
 	}
-	return tu
+	return _u
 }
 
 // SetTarget sets the "target" field.
-func (tu *TunnelUpdate) SetTarget(s string) *TunnelUpdate {
-	tu.mutation.SetTarget(s)
-	return tu
+func (_u *TunnelUpdate) SetTarget(v string) *TunnelUpdate {
+	_u.mutation.SetTarget(v)
+	return _u
 }
 
 // SetNillableTarget sets the "target" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableTarget(s *string) *TunnelUpdate {
-	if s != nil {
-		tu.SetTarget(*s)
+func (_u *TunnelUpdate) SetNillableTarget(v *string) *TunnelUpdate {
+	if v != nil {
+		_u.SetTarget(*v)
 	}
-	return tu
+	return _u
 }
 
 // SetEnabled sets the "enabled" field.
-func (tu *TunnelUpdate) SetEnabled(b bool) *TunnelUpdate {
-	tu.mutation.SetEnabled(b)
-	return tu
+func (_u *TunnelUpdate) SetEnabled(v bool) *TunnelUpdate {
+	_u.mutation.SetEnabled(v)
+	return _u
 }
 
 // SetNillableEnabled sets the "enabled" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableEnabled(b *bool) *TunnelUpdate {
-	if b != nil {
-		tu.SetEnabled(*b)
+func (_u *TunnelUpdate) SetNillableEnabled(v *bool) *TunnelUpdate {
+	if v != nil {
+		_u.SetEnabled(*v)
 	}
-	return tu
+	return _u
+}
+
+// SetMcpEnabled sets the "mcp_enabled" field.
+func (_u *TunnelUpdate) SetMcpEnabled(v bool) *TunnelUpdate {
+	_u.mutation.SetMcpEnabled(v)
+	return _u
+}
+
+// SetNillableMcpEnabled sets the "mcp_enabled" field if the given value is not nil.
+func (_u *TunnelUpdate) SetNillableMcpEnabled(v *bool) *TunnelUpdate {
+	if v != nil {
+		_u.SetMcpEnabled(*v)
+	}
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (tu *TunnelUpdate) SetUpdatedAt(t time.Time) *TunnelUpdate {
-	tu.mutation.SetUpdatedAt(t)
-	return tu
+func (_u *TunnelUpdate) SetUpdatedAt(v time.Time) *TunnelUpdate {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetNgrokAuthtoken sets the "ngrok_authtoken" field.
-func (tu *TunnelUpdate) SetNgrokAuthtoken(s string) *TunnelUpdate {
-	tu.mutation.SetNgrokAuthtoken(s)
-	return tu
+func (_u *TunnelUpdate) SetNgrokAuthtoken(v string) *TunnelUpdate {
+	_u.mutation.SetNgrokAuthtoken(v)
+	return _u
 }
 
 // SetNillableNgrokAuthtoken sets the "ngrok_authtoken" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableNgrokAuthtoken(s *string) *TunnelUpdate {
-	if s != nil {
-		tu.SetNgrokAuthtoken(*s)
+func (_u *TunnelUpdate) SetNillableNgrokAuthtoken(v *string) *TunnelUpdate {
+	if v != nil {
+		_u.SetNgrokAuthtoken(*v)
 	}
-	return tu
+	return _u
 }
 
 // ClearNgrokAuthtoken clears the value of the "ngrok_authtoken" field.
-func (tu *TunnelUpdate) ClearNgrokAuthtoken() *TunnelUpdate {
-	tu.mutation.ClearNgrokAuthtoken()
-	return tu
+func (_u *TunnelUpdate) ClearNgrokAuthtoken() *TunnelUpdate {
+	_u.mutation.ClearNgrokAuthtoken()
+	return _u
 }
 
 // SetNgrokDomain sets the "ngrok_domain" field.
-func (tu *TunnelUpdate) SetNgrokDomain(s string) *TunnelUpdate {
-	tu.mutation.SetNgrokDomain(s)
-	return tu
+func (_u *TunnelUpdate) SetNgrokDomain(v string) *TunnelUpdate {
+	_u.mutation.SetNgrokDomain(v)
+	return _u
 }
 
 // SetNillableNgrokDomain sets the "ngrok_domain" field if the given value is not nil.
-func (tu *TunnelUpdate) SetNillableNgrokDomain(s *string) *TunnelUpdate {
-	if s != nil {
-		tu.SetNgrokDomain(*s)
+func (_u *TunnelUpdate) SetNillableNgrokDomain(v *string) *TunnelUpdate {
+	if v != nil {
+		_u.SetNgrokDomain(*v)
 	}
-	return tu
+	return _u
 }
 
 // ClearNgrokDomain clears the value of the "ngrok_domain" field.
-func (tu *TunnelUpdate) ClearNgrokDomain() *TunnelUpdate {
-	tu.mutation.ClearNgrokDomain()
-	return tu
+func (_u *TunnelUpdate) ClearNgrokDomain() *TunnelUpdate {
+	_u.mutation.ClearNgrokDomain()
+	return _u
 }
 
 // Mutation returns the TunnelMutation object of the builder.
-func (tu *TunnelUpdate) Mutation() *TunnelMutation {
-	return tu.mutation
+func (_u *TunnelUpdate) Mutation() *TunnelMutation {
+	return _u.mutation
 }
 
 // Save executes the query and returns the number of nodes affected by the update operation.
-func (tu *TunnelUpdate) Save(ctx context.Context) (int, error) {
-	tu.defaults()
-	return withHooks(ctx, tu.sqlSave, tu.mutation, tu.hooks)
+func (_u *TunnelUpdate) Save(ctx context.Context) (int, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (tu *TunnelUpdate) SaveX(ctx context.Context) int {
-	affected, err := tu.Save(ctx)
+func (_u *TunnelUpdate) SaveX(ctx context.Context) int {
+	affected, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -151,29 +165,29 @@ func (tu *TunnelUpdate) SaveX(ctx context.Context) int {
 }
 
 // Exec executes the query.
-func (tu *TunnelUpdate) Exec(ctx context.Context) error {
-	_, err := tu.Save(ctx)
+func (_u *TunnelUpdate) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (tu *TunnelUpdate) ExecX(ctx context.Context) {
-	if err := tu.Exec(ctx); err != nil {
+func (_u *TunnelUpdate) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (tu *TunnelUpdate) defaults() {
-	if _, ok := tu.mutation.UpdatedAt(); !ok {
+func (_u *TunnelUpdate) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := tunnel.UpdateDefaultUpdatedAt()
-		tu.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (tu *TunnelUpdate) check() error {
-	if v, ok := tu.mutation.GetType(); ok {
+func (_u *TunnelUpdate) check() error {
+	if v, ok := _u.mutation.GetType(); ok {
 		if err := tunnel.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Tunnel.type": %w`, err)}
 		}
@@ -181,46 +195,49 @@ func (tu *TunnelUpdate) check() error {
 	return nil
 }
 
-func (tu *TunnelUpdate) sqlSave(ctx context.Context) (n int, err error) {
-	if err := tu.check(); err != nil {
-		return n, err
+func (_u *TunnelUpdate) sqlSave(ctx context.Context) (_node int, err error) {
+	if err := _u.check(); err != nil {
+		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(tunnel.Table, tunnel.Columns, sqlgraph.NewFieldSpec(tunnel.FieldID, field.TypeUUID))
-	if ps := tu.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := tu.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(tunnel.FieldName, field.TypeString, value)
 	}
-	if value, ok := tu.mutation.GetType(); ok {
+	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(tunnel.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := tu.mutation.Target(); ok {
+	if value, ok := _u.mutation.Target(); ok {
 		_spec.SetField(tunnel.FieldTarget, field.TypeString, value)
 	}
-	if value, ok := tu.mutation.Enabled(); ok {
+	if value, ok := _u.mutation.Enabled(); ok {
 		_spec.SetField(tunnel.FieldEnabled, field.TypeBool, value)
 	}
-	if value, ok := tu.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.McpEnabled(); ok {
+		_spec.SetField(tunnel.FieldMcpEnabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(tunnel.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if value, ok := tu.mutation.NgrokAuthtoken(); ok {
+	if value, ok := _u.mutation.NgrokAuthtoken(); ok {
 		_spec.SetField(tunnel.FieldNgrokAuthtoken, field.TypeString, value)
 	}
-	if tu.mutation.NgrokAuthtokenCleared() {
+	if _u.mutation.NgrokAuthtokenCleared() {
 		_spec.ClearField(tunnel.FieldNgrokAuthtoken, field.TypeString)
 	}
-	if value, ok := tu.mutation.NgrokDomain(); ok {
+	if value, ok := _u.mutation.NgrokDomain(); ok {
 		_spec.SetField(tunnel.FieldNgrokDomain, field.TypeString, value)
 	}
-	if tu.mutation.NgrokDomainCleared() {
+	if _u.mutation.NgrokDomainCleared() {
 		_spec.ClearField(tunnel.FieldNgrokDomain, field.TypeString)
 	}
-	if n, err = sqlgraph.UpdateNodes(ctx, tu.driver, _spec); err != nil {
+	if _node, err = sqlgraph.UpdateNodes(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{tunnel.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -228,8 +245,8 @@ func (tu *TunnelUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		return 0, err
 	}
-	tu.mutation.done = true
-	return n, nil
+	_u.mutation.done = true
+	return _node, nil
 }
 
 // TunnelUpdateOne is the builder for updating a single Tunnel entity.
@@ -241,134 +258,148 @@ type TunnelUpdateOne struct {
 }
 
 // SetName sets the "name" field.
-func (tuo *TunnelUpdateOne) SetName(s string) *TunnelUpdateOne {
-	tuo.mutation.SetName(s)
-	return tuo
+func (_u *TunnelUpdateOne) SetName(v string) *TunnelUpdateOne {
+	_u.mutation.SetName(v)
+	return _u
 }
 
 // SetNillableName sets the "name" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableName(s *string) *TunnelUpdateOne {
-	if s != nil {
-		tuo.SetName(*s)
+func (_u *TunnelUpdateOne) SetNillableName(v *string) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetName(*v)
 	}
-	return tuo
+	return _u
 }
 
 // SetType sets the "type" field.
-func (tuo *TunnelUpdateOne) SetType(t tunnel.Type) *TunnelUpdateOne {
-	tuo.mutation.SetType(t)
-	return tuo
+func (_u *TunnelUpdateOne) SetType(v tunnel.Type) *TunnelUpdateOne {
+	_u.mutation.SetType(v)
+	return _u
 }
 
 // SetNillableType sets the "type" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableType(t *tunnel.Type) *TunnelUpdateOne {
-	if t != nil {
-		tuo.SetType(*t)
+func (_u *TunnelUpdateOne) SetNillableType(v *tunnel.Type) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetType(*v)
 	}
-	return tuo
+	return _u
 }
 
 // SetTarget sets the "target" field.
-func (tuo *TunnelUpdateOne) SetTarget(s string) *TunnelUpdateOne {
-	tuo.mutation.SetTarget(s)
-	return tuo
+func (_u *TunnelUpdateOne) SetTarget(v string) *TunnelUpdateOne {
+	_u.mutation.SetTarget(v)
+	return _u
 }
 
 // SetNillableTarget sets the "target" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableTarget(s *string) *TunnelUpdateOne {
-	if s != nil {
-		tuo.SetTarget(*s)
+func (_u *TunnelUpdateOne) SetNillableTarget(v *string) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetTarget(*v)
 	}
-	return tuo
+	return _u
 }
 
 // SetEnabled sets the "enabled" field.
-func (tuo *TunnelUpdateOne) SetEnabled(b bool) *TunnelUpdateOne {
-	tuo.mutation.SetEnabled(b)
-	return tuo
+func (_u *TunnelUpdateOne) SetEnabled(v bool) *TunnelUpdateOne {
+	_u.mutation.SetEnabled(v)
+	return _u
 }
 
 // SetNillableEnabled sets the "enabled" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableEnabled(b *bool) *TunnelUpdateOne {
-	if b != nil {
-		tuo.SetEnabled(*b)
+func (_u *TunnelUpdateOne) SetNillableEnabled(v *bool) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetEnabled(*v)
 	}
-	return tuo
+	return _u
+}
+
+// SetMcpEnabled sets the "mcp_enabled" field.
+func (_u *TunnelUpdateOne) SetMcpEnabled(v bool) *TunnelUpdateOne {
+	_u.mutation.SetMcpEnabled(v)
+	return _u
+}
+
+// SetNillableMcpEnabled sets the "mcp_enabled" field if the given value is not nil.
+func (_u *TunnelUpdateOne) SetNillableMcpEnabled(v *bool) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetMcpEnabled(*v)
+	}
+	return _u
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (tuo *TunnelUpdateOne) SetUpdatedAt(t time.Time) *TunnelUpdateOne {
-	tuo.mutation.SetUpdatedAt(t)
-	return tuo
+func (_u *TunnelUpdateOne) SetUpdatedAt(v time.Time) *TunnelUpdateOne {
+	_u.mutation.SetUpdatedAt(v)
+	return _u
 }
 
 // SetNgrokAuthtoken sets the "ngrok_authtoken" field.
-func (tuo *TunnelUpdateOne) SetNgrokAuthtoken(s string) *TunnelUpdateOne {
-	tuo.mutation.SetNgrokAuthtoken(s)
-	return tuo
+func (_u *TunnelUpdateOne) SetNgrokAuthtoken(v string) *TunnelUpdateOne {
+	_u.mutation.SetNgrokAuthtoken(v)
+	return _u
 }
 
 // SetNillableNgrokAuthtoken sets the "ngrok_authtoken" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableNgrokAuthtoken(s *string) *TunnelUpdateOne {
-	if s != nil {
-		tuo.SetNgrokAuthtoken(*s)
+func (_u *TunnelUpdateOne) SetNillableNgrokAuthtoken(v *string) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetNgrokAuthtoken(*v)
 	}
-	return tuo
+	return _u
 }
 
 // ClearNgrokAuthtoken clears the value of the "ngrok_authtoken" field.
-func (tuo *TunnelUpdateOne) ClearNgrokAuthtoken() *TunnelUpdateOne {
-	tuo.mutation.ClearNgrokAuthtoken()
-	return tuo
+func (_u *TunnelUpdateOne) ClearNgrokAuthtoken() *TunnelUpdateOne {
+	_u.mutation.ClearNgrokAuthtoken()
+	return _u
 }
 
 // SetNgrokDomain sets the "ngrok_domain" field.
-func (tuo *TunnelUpdateOne) SetNgrokDomain(s string) *TunnelUpdateOne {
-	tuo.mutation.SetNgrokDomain(s)
-	return tuo
+func (_u *TunnelUpdateOne) SetNgrokDomain(v string) *TunnelUpdateOne {
+	_u.mutation.SetNgrokDomain(v)
+	return _u
 }
 
 // SetNillableNgrokDomain sets the "ngrok_domain" field if the given value is not nil.
-func (tuo *TunnelUpdateOne) SetNillableNgrokDomain(s *string) *TunnelUpdateOne {
-	if s != nil {
-		tuo.SetNgrokDomain(*s)
+func (_u *TunnelUpdateOne) SetNillableNgrokDomain(v *string) *TunnelUpdateOne {
+	if v != nil {
+		_u.SetNgrokDomain(*v)
 	}
-	return tuo
+	return _u
 }
 
 // ClearNgrokDomain clears the value of the "ngrok_domain" field.
-func (tuo *TunnelUpdateOne) ClearNgrokDomain() *TunnelUpdateOne {
-	tuo.mutation.ClearNgrokDomain()
-	return tuo
+func (_u *TunnelUpdateOne) ClearNgrokDomain() *TunnelUpdateOne {
+	_u.mutation.ClearNgrokDomain()
+	return _u
 }
 
 // Mutation returns the TunnelMutation object of the builder.
-func (tuo *TunnelUpdateOne) Mutation() *TunnelMutation {
-	return tuo.mutation
+func (_u *TunnelUpdateOne) Mutation() *TunnelMutation {
+	return _u.mutation
 }
 
 // Where appends a list predicates to the TunnelUpdate builder.
-func (tuo *TunnelUpdateOne) Where(ps ...predicate.Tunnel) *TunnelUpdateOne {
-	tuo.mutation.Where(ps...)
-	return tuo
+func (_u *TunnelUpdateOne) Where(ps ...predicate.Tunnel) *TunnelUpdateOne {
+	_u.mutation.Where(ps...)
+	return _u
 }
 
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
-func (tuo *TunnelUpdateOne) Select(field string, fields ...string) *TunnelUpdateOne {
-	tuo.fields = append([]string{field}, fields...)
-	return tuo
+func (_u *TunnelUpdateOne) Select(field string, fields ...string) *TunnelUpdateOne {
+	_u.fields = append([]string{field}, fields...)
+	return _u
 }
 
 // Save executes the query and returns the updated Tunnel entity.
-func (tuo *TunnelUpdateOne) Save(ctx context.Context) (*Tunnel, error) {
-	tuo.defaults()
-	return withHooks(ctx, tuo.sqlSave, tuo.mutation, tuo.hooks)
+func (_u *TunnelUpdateOne) Save(ctx context.Context) (*Tunnel, error) {
+	_u.defaults()
+	return withHooks(ctx, _u.sqlSave, _u.mutation, _u.hooks)
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (tuo *TunnelUpdateOne) SaveX(ctx context.Context) *Tunnel {
-	node, err := tuo.Save(ctx)
+func (_u *TunnelUpdateOne) SaveX(ctx context.Context) *Tunnel {
+	node, err := _u.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -376,29 +407,29 @@ func (tuo *TunnelUpdateOne) SaveX(ctx context.Context) *Tunnel {
 }
 
 // Exec executes the query on the entity.
-func (tuo *TunnelUpdateOne) Exec(ctx context.Context) error {
-	_, err := tuo.Save(ctx)
+func (_u *TunnelUpdateOne) Exec(ctx context.Context) error {
+	_, err := _u.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (tuo *TunnelUpdateOne) ExecX(ctx context.Context) {
-	if err := tuo.Exec(ctx); err != nil {
+func (_u *TunnelUpdateOne) ExecX(ctx context.Context) {
+	if err := _u.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (tuo *TunnelUpdateOne) defaults() {
-	if _, ok := tuo.mutation.UpdatedAt(); !ok {
+func (_u *TunnelUpdateOne) defaults() {
+	if _, ok := _u.mutation.UpdatedAt(); !ok {
 		v := tunnel.UpdateDefaultUpdatedAt()
-		tuo.mutation.SetUpdatedAt(v)
+		_u.mutation.SetUpdatedAt(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (tuo *TunnelUpdateOne) check() error {
-	if v, ok := tuo.mutation.GetType(); ok {
+func (_u *TunnelUpdateOne) check() error {
+	if v, ok := _u.mutation.GetType(); ok {
 		if err := tunnel.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Tunnel.type": %w`, err)}
 		}
@@ -406,17 +437,17 @@ func (tuo *TunnelUpdateOne) check() error {
 	return nil
 }
 
-func (tuo *TunnelUpdateOne) sqlSave(ctx context.Context) (_node *Tunnel, err error) {
-	if err := tuo.check(); err != nil {
+func (_u *TunnelUpdateOne) sqlSave(ctx context.Context) (_node *Tunnel, err error) {
+	if err := _u.check(); err != nil {
 		return _node, err
 	}
 	_spec := sqlgraph.NewUpdateSpec(tunnel.Table, tunnel.Columns, sqlgraph.NewFieldSpec(tunnel.FieldID, field.TypeUUID))
-	id, ok := tuo.mutation.ID()
+	id, ok := _u.mutation.ID()
 	if !ok {
 		return nil, &ValidationError{Name: "id", err: errors.New(`ent: missing "Tunnel.id" for update`)}
 	}
 	_spec.Node.ID.Value = id
-	if fields := tuo.fields; len(fields) > 0 {
+	if fields := _u.fields; len(fields) > 0 {
 		_spec.Node.Columns = make([]string, 0, len(fields))
 		_spec.Node.Columns = append(_spec.Node.Columns, tunnel.FieldID)
 		for _, f := range fields {
@@ -428,44 +459,47 @@ func (tuo *TunnelUpdateOne) sqlSave(ctx context.Context) (_node *Tunnel, err err
 			}
 		}
 	}
-	if ps := tuo.mutation.predicates; len(ps) > 0 {
+	if ps := _u.mutation.predicates; len(ps) > 0 {
 		_spec.Predicate = func(selector *sql.Selector) {
 			for i := range ps {
 				ps[i](selector)
 			}
 		}
 	}
-	if value, ok := tuo.mutation.Name(); ok {
+	if value, ok := _u.mutation.Name(); ok {
 		_spec.SetField(tunnel.FieldName, field.TypeString, value)
 	}
-	if value, ok := tuo.mutation.GetType(); ok {
+	if value, ok := _u.mutation.GetType(); ok {
 		_spec.SetField(tunnel.FieldType, field.TypeEnum, value)
 	}
-	if value, ok := tuo.mutation.Target(); ok {
+	if value, ok := _u.mutation.Target(); ok {
 		_spec.SetField(tunnel.FieldTarget, field.TypeString, value)
 	}
-	if value, ok := tuo.mutation.Enabled(); ok {
+	if value, ok := _u.mutation.Enabled(); ok {
 		_spec.SetField(tunnel.FieldEnabled, field.TypeBool, value)
 	}
-	if value, ok := tuo.mutation.UpdatedAt(); ok {
+	if value, ok := _u.mutation.McpEnabled(); ok {
+		_spec.SetField(tunnel.FieldMcpEnabled, field.TypeBool, value)
+	}
+	if value, ok := _u.mutation.UpdatedAt(); ok {
 		_spec.SetField(tunnel.FieldUpdatedAt, field.TypeTime, value)
 	}
-	if value, ok := tuo.mutation.NgrokAuthtoken(); ok {
+	if value, ok := _u.mutation.NgrokAuthtoken(); ok {
 		_spec.SetField(tunnel.FieldNgrokAuthtoken, field.TypeString, value)
 	}
-	if tuo.mutation.NgrokAuthtokenCleared() {
+	if _u.mutation.NgrokAuthtokenCleared() {
 		_spec.ClearField(tunnel.FieldNgrokAuthtoken, field.TypeString)
 	}
-	if value, ok := tuo.mutation.NgrokDomain(); ok {
+	if value, ok := _u.mutation.NgrokDomain(); ok {
 		_spec.SetField(tunnel.FieldNgrokDomain, field.TypeString, value)
 	}
-	if tuo.mutation.NgrokDomainCleared() {
+	if _u.mutation.NgrokDomainCleared() {
 		_spec.ClearField(tunnel.FieldNgrokDomain, field.TypeString)
 	}
-	_node = &Tunnel{config: tuo.config}
+	_node = &Tunnel{config: _u.config}
 	_spec.Assign = _node.assignValues
 	_spec.ScanValues = _node.scanValues
-	if err = sqlgraph.UpdateNode(ctx, tuo.driver, _spec); err != nil {
+	if err = sqlgraph.UpdateNode(ctx, _u.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{tunnel.Label}
 		} else if sqlgraph.IsConstraintError(err) {
@@ -473,6 +507,6 @@ func (tuo *TunnelUpdateOne) sqlSave(ctx context.Context) (_node *Tunnel, err err
 		}
 		return nil, err
 	}
-	tuo.mutation.done = true
+	_u.mutation.done = true
 	return _node, nil
 }

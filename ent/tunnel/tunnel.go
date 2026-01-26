@@ -23,6 +23,8 @@ const (
 	FieldTarget = "target"
 	// FieldEnabled holds the string denoting the enabled field in the database.
 	FieldEnabled = "enabled"
+	// FieldMcpEnabled holds the string denoting the mcp_enabled field in the database.
+	FieldMcpEnabled = "mcp_enabled"
 	// FieldCreatedAt holds the string denoting the created_at field in the database.
 	FieldCreatedAt = "created_at"
 	// FieldUpdatedAt holds the string denoting the updated_at field in the database.
@@ -42,6 +44,7 @@ var Columns = []string{
 	FieldType,
 	FieldTarget,
 	FieldEnabled,
+	FieldMcpEnabled,
 	FieldCreatedAt,
 	FieldUpdatedAt,
 	FieldNgrokAuthtoken,
@@ -61,6 +64,8 @@ func ValidColumn(column string) bool {
 var (
 	// DefaultEnabled holds the default value on creation for the "enabled" field.
 	DefaultEnabled bool
+	// DefaultMcpEnabled holds the default value on creation for the "mcp_enabled" field.
+	DefaultMcpEnabled bool
 	// DefaultCreatedAt holds the default value on creation for the "created_at" field.
 	DefaultCreatedAt func() time.Time
 	// DefaultUpdatedAt holds the default value on creation for the "updated_at" field.
@@ -120,6 +125,11 @@ func ByTarget(opts ...sql.OrderTermOption) OrderOption {
 // ByEnabled orders the results by the enabled field.
 func ByEnabled(opts ...sql.OrderTermOption) OrderOption {
 	return sql.OrderByField(FieldEnabled, opts...).ToFunc()
+}
+
+// ByMcpEnabled orders the results by the mcp_enabled field.
+func ByMcpEnabled(opts ...sql.OrderTermOption) OrderOption {
+	return sql.OrderByField(FieldMcpEnabled, opts...).ToFunc()
 }
 
 // ByCreatedAt orders the results by the created_at field.

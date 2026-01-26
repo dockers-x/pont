@@ -3,6 +3,8 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
         <title>Pont</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -142,6 +144,63 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="card mcp-card">
+                    <div class="card-header">
+                        <h2 data-i18n="mcp.title">MCP Integration</h2>
+                        <span class="badge badge-success" data-i18n="mcp.status_active">Active</span>
+                    </div>
+                    <div class="card-body">
+                        <p class="mcp-description" data-i18n="mcp.description">
+                            Pont supports MCP (Model Context Protocol), allowing AI models to manage tunnels programmatically.
+                        </p>
+
+                        <div class="mcp-section">
+                            <h3 data-i18n="mcp.endpoint">MCP Endpoint</h3>
+                            <div class="mcp-endpoint">
+                                <code id="mcp-endpoint-url">http://localhost:13333/mcp</code>
+                                <button class="btn btn-sm btn-ghost" id="copy-mcp-endpoint" aria-label="Copy MCP endpoint">
+                                    📋
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mcp-section">
+                            <h3 data-i18n="mcp.available_tools">Available Tools</h3>
+                            <ul class="mcp-tools-list">
+                                <li>
+                                    <strong data-i18n="mcp.tool.list_tunnels">listTunnels</strong>
+                                    <span data-i18n="mcp.tool.list_tunnels_desc">List all available tunnel configurations with their current status</span>
+                                </li>
+                                <li>
+                                    <strong data-i18n="mcp.tool.start_tunnel">startTunnel</strong>
+                                    <span data-i18n="mcp.tool.start_tunnel_desc">Start a specific tunnel by ID and get the public URL</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mcp-section">
+                            <h3 data-i18n="mcp.config_example">Configuration Example</h3>
+                            <pre class="mcp-config"><code id="mcp-config-json">{
+  "mcpServers": {
+    "pont": {
+      "url": "http://localhost:13333/mcp"
+    }
+  }
+}</code></pre>
+                            <button class="btn btn-sm btn-secondary" id="copy-mcp-config" aria-label="Copy MCP configuration">
+                                Copy Configuration
+                            </button>
+                        </div>
+
+                        <div class="mcp-section mcp-security">
+                            <h3 data-i18n="mcp.security_note">Security Note</h3>
+                            <p data-i18n="mcp.security_desc">
+                                The MCP endpoint is accessible on your local network. Ensure proper network security measures are in place.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
 
@@ -179,6 +238,19 @@
                             </label>
                         </div>
                         <div class="form-group">
+                            <label class="toggle-container">
+                                <input type="checkbox" id="tunnel-mcp-enabled" checked />
+                                <span data-i18n="ui.modal.mcp_enabled"
+                                    >Allow MCP Management</span
+                                >
+                            </label>
+                            <small class="form-help">
+                                <span data-i18n="ui.modal.mcp_enabled_help"
+                                    >Allow AI models to manage this tunnel via MCP</span
+                                >
+                            </small>
+                        </div>
+                        <div class="form-group">
                             <label for="tunnel-type"
                                 ><span data-i18n="ui.modal.type">Type</span>
                                 <span class="required">*</span></label
@@ -214,7 +286,7 @@
                                     type="text"
                                     id="tunnel-target"
                                     name="tunnel-target"
-                                    placeholder="localhost:8080"
+                                    placeholder="localhost:8080…"
                                     autocomplete="off"
                                     required
                                     style="flex: 1;"

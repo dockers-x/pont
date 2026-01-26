@@ -8,12 +8,14 @@ import (
 	"net/http"
 	"pont/internal/config"
 	"pont/internal/logger"
+	"pont/internal/mcp"
 	"pont/internal/service"
 	"pont/internal/web"
 	"pont/version"
 	"time"
 
 	"github.com/google/uuid"
+	mcpsdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
 // Server represents the HTTP server
@@ -21,15 +23,20 @@ type Server struct {
 	addr       string
 	cfgMgr     *config.Manager
 	svcMgr     *service.Manager
+	mcpServer  *mcp.Server
 	httpServer *http.Server
 }
 
 // NewServer creates a new HTTP server
 func NewServer(addr string, cfgMgr *config.Manager, svcMgr *service.Manager) *Server {
+	// Create MCP server
+	mcpServer := mcp.NewServer(cfgMgr, svcMgr)
+
 	return &Server{
-		addr:   addr,
-		cfgMgr: cfgMgr,
-		svcMgr: svcMgr,
+		addr:      addr,
+		cfgMgr:    cfgMgr,
+		svcMgr:    svcMgr,
+		mcpServer: mcpServer,
 	}
 }
 
@@ -45,6 +52,13 @@ func (s *Server) Start() error {
 	mux.HandleFunc("/api/logs/stream", s.handleLogsStream)
 	mux.HandleFunc("/api/logs/recent", s.handleLogsRecent)
 	mux.HandleFunc("/api/version", s.handleVersion)
+	mux.HandleFunc("/api/mcp/info", s.handleMCPInfo)
+
+	// MCP endpoint (SSE)
+	mcpHandler := mcpsdk.NewSSEHandler(func(r *http.Request) *mcpsdk.Server {
+		return s.mcpServer.GetServer()
+	}, nil)
+	mux.Handle("/mcp", mcpHandler)
 
 	// Static files
 	distFS, _ := fs.Sub(web.DistFS, "dist")
@@ -315,6 +329,39 @@ func (s *Server) handleVersion(w http.ResponseWriter, r *http.Request) {
 		"build_time": version.GetBuildTime(),
 		"git_commit": version.GetGitCommit(),
 	})
+}
+
+func (s *Server) handleMCPInfo(w http.ResponseWriter, r *http.Request) {
+	// Get server address
+	addr := s.addr
+	if addr == "0.0.0.0:13333" || addr == ":13333" {
+		addr = "localhost:13333"
+	}
+
+	mcpInfo := map[string]interface{}{
+		"endpoint": fmt.Sprintf("http://%s/mcp", addr),
+		"status":   "active",
+		"tools": []map[string]string{
+			{
+				"name":        "listTunnels",
+				"description": "List all available tunnel configurations with their current status",
+			},
+			{
+				"name":        "startTunnel",
+				"description": "Start a specific tunnel by ID and get the public URL",
+				"parameters":  "tunnel_id (required): The ID of the tunnel to start",
+			},
+		},
+		"config_example": map[string]interface{}{
+			"mcpServers": map[string]interface{}{
+				"pont": map[string]interface{}{
+					"url": fmt.Sprintf("http://%s/mcp", addr),
+				},
+			},
+		},
+	}
+
+	s.jsonResponse(w, mcpInfo)
 }
 
 func (s *Server) jsonResponse(w http.ResponseWriter, data interface{}) {

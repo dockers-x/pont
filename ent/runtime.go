@@ -20,12 +20,16 @@ func init() {
 	tunnelDescEnabled := tunnelFields[4].Descriptor()
 	// tunnel.DefaultEnabled holds the default value on creation for the enabled field.
 	tunnel.DefaultEnabled = tunnelDescEnabled.Default.(bool)
+	// tunnelDescMcpEnabled is the schema descriptor for mcp_enabled field.
+	tunnelDescMcpEnabled := tunnelFields[5].Descriptor()
+	// tunnel.DefaultMcpEnabled holds the default value on creation for the mcp_enabled field.
+	tunnel.DefaultMcpEnabled = tunnelDescMcpEnabled.Default.(bool)
 	// tunnelDescCreatedAt is the schema descriptor for created_at field.
-	tunnelDescCreatedAt := tunnelFields[5].Descriptor()
+	tunnelDescCreatedAt := tunnelFields[6].Descriptor()
 	// tunnel.DefaultCreatedAt holds the default value on creation for the created_at field.
 	tunnel.DefaultCreatedAt = tunnelDescCreatedAt.Default.(func() time.Time)
 	// tunnelDescUpdatedAt is the schema descriptor for updated_at field.
-	tunnelDescUpdatedAt := tunnelFields[6].Descriptor()
+	tunnelDescUpdatedAt := tunnelFields[7].Descriptor()
 	// tunnel.DefaultUpdatedAt holds the default value on creation for the updated_at field.
 	tunnel.DefaultUpdatedAt = tunnelDescUpdatedAt.Default.(func() time.Time)
 	// tunnel.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.

@@ -290,6 +290,7 @@ function editTunnel(id) {
     document.getElementById('tunnel-name').value = tunnel.name;
     document.getElementById('tunnel-type').value = tunnel.type;
     document.getElementById('tunnel-enabled').checked = tunnel.enabled;
+    document.getElementById('tunnel-mcp-enabled').checked = tunnel.mcp_enabled !== false;
 
     // Parse protocol and target
     let protocol = 'http://';
@@ -380,7 +381,8 @@ async function saveTunnel(e) {
         name: document.getElementById('tunnel-name').value,
         type: document.getElementById('tunnel-type').value,
         target: target,
-        enabled: document.getElementById('tunnel-enabled').checked
+        enabled: document.getElementById('tunnel-enabled').checked,
+        mcp_enabled: document.getElementById('tunnel-mcp-enabled').checked
     };
 
     if (tunnel.type === 'ngrok') {
@@ -540,4 +542,49 @@ elements.tunnelModal.addEventListener('click', (e) => {
     if (e.target === elements.tunnelModal) closeModal();
 });
 
+// MCP functions
+async function loadMCPInfo() {
+    try {
+        const response = await fetch('/api/mcp/info');
+        const data = await response.json();
+
+        if (data.endpoint) {
+            document.getElementById('mcp-endpoint-url').textContent = data.endpoint;
+            const configJson = JSON.stringify(data.config_example, null, 2);
+            document.getElementById('mcp-config-json').textContent = configJson;
+        }
+    } catch (error) {
+        console.error('Failed to load MCP info:', error);
+    }
+}
+
+function copyMCPEndpoint() {
+    const endpoint = document.getElementById('mcp-endpoint-url').textContent;
+    navigator.clipboard.writeText(endpoint).then(() => {
+        showNotification('MCP endpoint copied to clipboard!');
+    });
+}
+
+function copyMCPConfig() {
+    const config = document.getElementById('mcp-config-json').textContent;
+    navigator.clipboard.writeText(config).then(() => {
+        showNotification('MCP configuration copied to clipboard!');
+    });
+}
+
+function showNotification(message) {
+    // Simple notification - you can enhance this
+    const notification = document.createElement('div');
+    notification.className = 'notification';
+    notification.textContent = message;
+    notification.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:white;padding:15px 20px;border-radius:4px;z-index:10000;';
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
+
+// Add event listeners for MCP buttons
+document.getElementById('copy-mcp-endpoint')?.addEventListener('click', copyMCPEndpoint);
+document.getElementById('copy-mcp-config')?.addEventListener('click', copyMCPConfig);
+
 init();
+loadMCPInfo();

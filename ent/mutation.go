@@ -420,6 +420,7 @@ type TunnelMutation struct {
 	_type           *tunnel.Type
 	target          *string
 	enabled         *bool
+	mcp_enabled     *bool
 	created_at      *time.Time
 	updated_at      *time.Time
 	ngrok_authtoken *string
@@ -678,6 +679,42 @@ func (m *TunnelMutation) ResetEnabled() {
 	m.enabled = nil
 }
 
+// SetMcpEnabled sets the "mcp_enabled" field.
+func (m *TunnelMutation) SetMcpEnabled(b bool) {
+	m.mcp_enabled = &b
+}
+
+// McpEnabled returns the value of the "mcp_enabled" field in the mutation.
+func (m *TunnelMutation) McpEnabled() (r bool, exists bool) {
+	v := m.mcp_enabled
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldMcpEnabled returns the old "mcp_enabled" field's value of the Tunnel entity.
+// If the Tunnel object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *TunnelMutation) OldMcpEnabled(ctx context.Context) (v bool, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, errors.New("OldMcpEnabled is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, errors.New("OldMcpEnabled requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldMcpEnabled: %w", err)
+	}
+	return oldValue.McpEnabled, nil
+}
+
+// ResetMcpEnabled resets all changes to the "mcp_enabled" field.
+func (m *TunnelMutation) ResetMcpEnabled() {
+	m.mcp_enabled = nil
+}
+
 // SetCreatedAt sets the "created_at" field.
 func (m *TunnelMutation) SetCreatedAt(t time.Time) {
 	m.created_at = &t
@@ -882,7 +919,7 @@ func (m *TunnelMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *TunnelMutation) Fields() []string {
-	fields := make([]string, 0, 8)
+	fields := make([]string, 0, 9)
 	if m.name != nil {
 		fields = append(fields, tunnel.FieldName)
 	}
@@ -894,6 +931,9 @@ func (m *TunnelMutation) Fields() []string {
 	}
 	if m.enabled != nil {
 		fields = append(fields, tunnel.FieldEnabled)
+	}
+	if m.mcp_enabled != nil {
+		fields = append(fields, tunnel.FieldMcpEnabled)
 	}
 	if m.created_at != nil {
 		fields = append(fields, tunnel.FieldCreatedAt)
@@ -923,6 +963,8 @@ func (m *TunnelMutation) Field(name string) (ent.Value, bool) {
 		return m.Target()
 	case tunnel.FieldEnabled:
 		return m.Enabled()
+	case tunnel.FieldMcpEnabled:
+		return m.McpEnabled()
 	case tunnel.FieldCreatedAt:
 		return m.CreatedAt()
 	case tunnel.FieldUpdatedAt:
@@ -948,6 +990,8 @@ func (m *TunnelMutation) OldField(ctx context.Context, name string) (ent.Value, 
 		return m.OldTarget(ctx)
 	case tunnel.FieldEnabled:
 		return m.OldEnabled(ctx)
+	case tunnel.FieldMcpEnabled:
+		return m.OldMcpEnabled(ctx)
 	case tunnel.FieldCreatedAt:
 		return m.OldCreatedAt(ctx)
 	case tunnel.FieldUpdatedAt:
@@ -992,6 +1036,13 @@ func (m *TunnelMutation) SetField(name string, value ent.Value) error {
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetEnabled(v)
+		return nil
+	case tunnel.FieldMcpEnabled:
+		v, ok := value.(bool)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetMcpEnabled(v)
 		return nil
 	case tunnel.FieldCreatedAt:
 		v, ok := value.(time.Time)
@@ -1096,6 +1147,9 @@ func (m *TunnelMutation) ResetField(name string) error {
 		return nil
 	case tunnel.FieldEnabled:
 		m.ResetEnabled()
+		return nil
+	case tunnel.FieldMcpEnabled:
+		m.ResetMcpEnabled()
 		return nil
 	case tunnel.FieldCreatedAt:
 		m.ResetCreatedAt()

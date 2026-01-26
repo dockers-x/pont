@@ -21,6 +21,7 @@ func (Tunnel) Fields() []ent.Field {
 		field.Enum("type").Values("cloudflare", "ngrok"),
 		field.String("target"),
 		field.Bool("enabled").Default(true),
+		field.Bool("mcp_enabled").Default(true).Comment("Allow this tunnel to be managed via MCP"),
 		field.Time("created_at").Default(time.Now).Immutable(),
 		field.Time("updated_at").Default(time.Now).UpdateDefault(time.Now),
 		field.String("ngrok_authtoken").Optional().Nillable(),

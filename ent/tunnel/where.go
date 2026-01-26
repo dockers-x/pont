@@ -70,6 +70,11 @@ func Enabled(v bool) predicate.Tunnel {
 	return predicate.Tunnel(sql.FieldEQ(FieldEnabled, v))
 }
 
+// McpEnabled applies equality check predicate on the "mcp_enabled" field. It's identical to McpEnabledEQ.
+func McpEnabled(v bool) predicate.Tunnel {
+	return predicate.Tunnel(sql.FieldEQ(FieldMcpEnabled, v))
+}
+
 // CreatedAt applies equality check predicate on the "created_at" field. It's identical to CreatedAtEQ.
 func CreatedAt(v time.Time) predicate.Tunnel {
 	return predicate.Tunnel(sql.FieldEQ(FieldCreatedAt, v))
@@ -248,6 +253,16 @@ func EnabledEQ(v bool) predicate.Tunnel {
 // EnabledNEQ applies the NEQ predicate on the "enabled" field.
 func EnabledNEQ(v bool) predicate.Tunnel {
 	return predicate.Tunnel(sql.FieldNEQ(FieldEnabled, v))
+}
+
+// McpEnabledEQ applies the EQ predicate on the "mcp_enabled" field.
+func McpEnabledEQ(v bool) predicate.Tunnel {
+	return predicate.Tunnel(sql.FieldEQ(FieldMcpEnabled, v))
+}
+
+// McpEnabledNEQ applies the NEQ predicate on the "mcp_enabled" field.
+func McpEnabledNEQ(v bool) predicate.Tunnel {
+	return predicate.Tunnel(sql.FieldNEQ(FieldMcpEnabled, v))
 }
 
 // CreatedAtEQ applies the EQ predicate on the "created_at" field.

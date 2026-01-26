@@ -43,6 +43,8 @@
   "ui.modal.ngrok_domain": "Ngrok 域名（可选）",
   "ui.modal.ngrok_free_limit": "⚠️ 免费账户：仅允许 1 个端点",
   "ui.modal.enabled": "已启用",
+  "ui.modal.mcp_enabled": "允许 MCP 管理",
+  "ui.modal.mcp_enabled_help": "允许 AI 模型通过 MCP 管理此隧道",
   "ui.modal.cancel": "取消",
   "ui.modal.save": "保存",
 
@@ -59,5 +61,24 @@
 
   "ui.error.ngrok_limit": "免费 ngrok 账户一次只能运行一个隧道。请先停止其他隧道。",
 
-  "ui.theme.toggle": "切换主题"
+  "ui.theme.toggle": "切换主题",
+
+  "mcp.title": "MCP 集成",
+  "mcp.subtitle": "模型上下文协议",
+  "mcp.description": "Pont 支持 MCP（模型上下文协议），允许 AI 模型以编程方式管理隧道。",
+  "mcp.endpoint": "MCP 端点",
+  "mcp.endpoint_url": "端点 URL",
+  "mcp.status": "状态",
+  "mcp.status_active": "活跃",
+  "mcp.status_inactive": "未激活",
+  "mcp.available_tools": "可用工具",
+  "mcp.tool.list_tunnels": "列出隧道",
+  "mcp.tool.list_tunnels_desc": "列出所有可用的隧道配置及其当前状态",
+  "mcp.tool.start_tunnel": "启动隧道",
+  "mcp.tool.start_tunnel_desc": "通过 ID 启动特定隧道并获取公网 URL",
+  "mcp.usage": "使用方法",
+  "mcp.usage_desc": "配置您的 AI 客户端连接到上述 MCP 端点。AI 可以代表您管理隧道。",
+  "mcp.config_example": "配置示例",
+  "mcp.security_note": "安全提示",
+  "mcp.security_desc": "MCP 端点可在您的本地网络上访问。请确保采取适当的网络安全措施。"
 }

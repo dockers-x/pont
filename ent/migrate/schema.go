@@ -34,6 +34,7 @@ var (
 		{Name: "type", Type: field.TypeEnum, Enums: []string{"cloudflare", "ngrok"}},
 		{Name: "target", Type: field.TypeString},
 		{Name: "enabled", Type: field.TypeBool, Default: true},
+		{Name: "mcp_enabled", Type: field.TypeBool, Default: true},
 		{Name: "created_at", Type: field.TypeTime},
 		{Name: "updated_at", Type: field.TypeTime},
 		{Name: "ngrok_authtoken", Type: field.TypeString, Nullable: true},

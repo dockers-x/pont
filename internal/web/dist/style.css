@@ -1,4 +1,5 @@
 :root {
+    color-scheme: light;
     --google-blue: #4285F4;
     --google-red: #EA4335;
     --google-yellow: #FBBC04;
@@ -29,6 +30,7 @@
 }
 
 [data-theme="dark"] {
+    color-scheme: dark;
     --bg-color: #0a0a0a;
     --bg-gradient: linear-gradient(135deg, rgba(66, 133, 244, 0.05) 0%, rgba(234, 67, 53, 0.05) 50%, rgba(251, 188, 4, 0.05) 100%);
     --card-bg: #171717;
@@ -322,6 +324,11 @@ body {
     transition: opacity 0.15s, border-color 0.15s, color 0.15s;
 }
 
+.btn:focus-visible {
+    outline: 2px solid var(--google-blue);
+    outline-offset: 2px;
+}
+
 .btn-primary {
     background: linear-gradient(135deg, var(--google-blue) 0%, var(--google-red) 100%);
     color: white;
@@ -341,6 +348,11 @@ body {
     border-color: var(--text-secondary);
 }
 
+.btn-secondary:focus-visible {
+    outline: 2px solid var(--google-blue);
+    outline-offset: 2px;
+}
+
 .btn-ghost {
     background: transparent;
     color: var(--text-secondary);
@@ -349,6 +361,11 @@ body {
 
 .btn-ghost:hover {
     color: var(--text-primary);
+}
+
+.btn-ghost:focus-visible {
+    outline: 2px solid var(--google-blue);
+    outline-offset: 2px;
 }
 
 .btn-success {
@@ -449,6 +466,7 @@ body {
     width: 90%;
     max-width: 500px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overscroll-behavior: contain;
 }
 
 .modal-header {
@@ -682,5 +700,141 @@ body {
     overflow: hidden;
     clip: rect(0, 0, 0, 0);
     white-space: nowrap;
+    border-width: 0;
+}
+
+/* MCP Card Styles */
+.mcp-card {
+    margin-top: 24px;
+}
+
+.mcp-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+[data-theme='dark'] .badge-success {
+    background-color: #1e4620;
+    color: #7bc67e;
+}
+
+.mcp-description {
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.6;
+}
+
+.mcp-section {
+    margin-bottom: 24px;
+}
+
+.mcp-section h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.mcp-endpoint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.mcp-endpoint code {
+    flex: 1;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    color: var(--text-primary);
+}
+
+.mcp-tools-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.mcp-tools-list li {
+    padding: 12px;
+    margin-bottom: 8px;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+}
+
+.mcp-tools-list strong {
+    display: block;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+}
+
+.mcp-tools-list span {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.mcp-config {
+    margin: 12px 0;
+    padding: 16px;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    overflow-x: auto;
+}
+
+.mcp-config code {
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.mcp-security {
+    padding: 16px;
+    background-color: #fff3cd;
+    border-radius: 6px;
+    border: 1px solid #ffc107;
+}
+
+[data-theme='dark'] .mcp-security {
+    background-color: #3d3416;
+    border-color: #856404;
+}
+
+.mcp-security h3 {
+    color: #856404;
+}
+
+[data-theme='dark'] .mcp-security h3 {
+    color: #ffc107;
+}
+
+.mcp-security p {
+    color: #856404;
+    margin: 0;
+}
+
+[data-theme='dark'] .mcp-security p {
+    color: #d39e00;
+}
+
     border-width: 0;
 }

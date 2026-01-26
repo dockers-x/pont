@@ -43,6 +43,8 @@
   "ui.modal.ngrok_domain": "Ngrok ドメイン（オプション）",
   "ui.modal.ngrok_free_limit": "⚠️ 無料アカウント：1つのエンドポイントのみ許可",
   "ui.modal.enabled": "有効",
+  "ui.modal.mcp_enabled": "MCP 管理を許可",
+  "ui.modal.mcp_enabled_help": "AI モデルが MCP を介してこのトンネルを管理することを許可",
   "ui.modal.cancel": "キャンセル",
   "ui.modal.save": "保存",
 
@@ -59,5 +61,24 @@
 
   "ui.error.ngrok_limit": "無料の ngrok アカウントは一度に1つのトンネルしか実行できません。他のトンネルを先に停止してください。",
 
-  "ui.theme.toggle": "テーマを切り替え"
+  "ui.theme.toggle": "テーマを切り替え",
+
+  "mcp.title": "MCP 統合",
+  "mcp.subtitle": "モデルコンテキストプロトコル",
+  "mcp.description": "Pont は MCP（モデルコンテキストプロトコル）をサポートしており、AI モデルがプログラムでトンネルを管理できます。",
+  "mcp.endpoint": "MCP エンドポイント",
+  "mcp.endpoint_url": "エンドポイント URL",
+  "mcp.status": "ステータス",
+  "mcp.status_active": "アクティブ",
+  "mcp.status_inactive": "非アクティブ",
+  "mcp.available_tools": "利用可能なツール",
+  "mcp.tool.list_tunnels": "トンネルをリスト",
+  "mcp.tool.list_tunnels_desc": "すべての利用可能なトンネル設定とその現在のステータスをリスト",
+  "mcp.tool.start_tunnel": "トンネルを開始",
+  "mcp.tool.start_tunnel_desc": "ID で特定のトンネルを開始し、パブリック URL を取得",
+  "mcp.usage": "使用方法",
+  "mcp.usage_desc": "AI クライアントを上記の MCP エンドポイントに接続するように設定します。AI はあなたに代わってトンネルを管理できます。",
+  "mcp.config_example": "設定例",
+  "mcp.security_note": "セキュリティ注意",
+  "mcp.security_desc": "MCP エンドポイントはローカルネットワークでアクセス可能です。適切なネットワークセキュリティ対策を講じてください。"
 }

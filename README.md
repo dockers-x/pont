@@ -12,6 +12,7 @@ A web-based tunnel management service supporting both Cloudflare Quick Tunnel an
 - **Database Storage**: Persistent configuration with ent ORM
 - **Docker Support**: Easy deployment with Docker and docker-compose
 - **RESTful API**: Complete API for programmatic access
+- **MCP Integration**: AI-powered tunnel management via Model Context Protocol
 
 ## Quick Start
 
@@ -69,6 +70,13 @@ Environment variables:
 - `GET /api/logs/stream` - SSE log stream
 - `GET /api/logs/recent` - Recent logs
 - `GET /api/version` - Version info
+- `GET /api/mcp/info` - MCP configuration info
+
+### MCP (Model Context Protocol)
+
+- `SSE /mcp` - MCP endpoint for AI integration
+
+See [MCP_README.md](MCP_README.md) for detailed MCP integration guide.
 
 ## Architecture
 

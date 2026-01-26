@@ -26,6 +26,8 @@ type Tunnel struct {
 	Target string `json:"target,omitempty"`
 	// Enabled holds the value of the "enabled" field.
 	Enabled bool `json:"enabled,omitempty"`
+	// Allow this tunnel to be managed via MCP
+	McpEnabled bool `json:"mcp_enabled,omitempty"`
 	// CreatedAt holds the value of the "created_at" field.
 	CreatedAt time.Time `json:"created_at,omitempty"`
 	// UpdatedAt holds the value of the "updated_at" field.
@@ -42,7 +44,7 @@ func (*Tunnel) scanValues(columns []string) ([]any, error) {
 	values := make([]any, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case tunnel.FieldEnabled:
+		case tunnel.FieldEnabled, tunnel.FieldMcpEnabled:
 			values[i] = new(sql.NullBool)
 		case tunnel.FieldName, tunnel.FieldType, tunnel.FieldTarget, tunnel.FieldNgrokAuthtoken, tunnel.FieldNgrokDomain:
 			values[i] = new(sql.NullString)
@@ -59,7 +61,7 @@ func (*Tunnel) scanValues(columns []string) ([]any, error) {
 
 // assignValues assigns the values that were returned from sql.Rows (after scanning)
 // to the Tunnel fields.
-func (t *Tunnel) assignValues(columns []string, values []any) error {
+func (_m *Tunnel) assignValues(columns []string, values []any) error {
 	if m, n := len(values), len(columns); m < n {
 		return fmt.Errorf("mismatch number of scan values: %d != %d", m, n)
 	}
@@ -69,60 +71,66 @@ func (t *Tunnel) assignValues(columns []string, values []any) error {
 			if value, ok := values[i].(*uuid.UUID); !ok {
 				return fmt.Errorf("unexpected type %T for field id", values[i])
 			} else if value != nil {
-				t.ID = *value
+				_m.ID = *value
 			}
 		case tunnel.FieldName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field name", values[i])
 			} else if value.Valid {
-				t.Name = value.String
+				_m.Name = value.String
 			}
 		case tunnel.FieldType:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field type", values[i])
 			} else if value.Valid {
-				t.Type = tunnel.Type(value.String)
+				_m.Type = tunnel.Type(value.String)
 			}
 		case tunnel.FieldTarget:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field target", values[i])
 			} else if value.Valid {
-				t.Target = value.String
+				_m.Target = value.String
 			}
 		case tunnel.FieldEnabled:
 			if value, ok := values[i].(*sql.NullBool); !ok {
 				return fmt.Errorf("unexpected type %T for field enabled", values[i])
 			} else if value.Valid {
-				t.Enabled = value.Bool
+				_m.Enabled = value.Bool
+			}
+		case tunnel.FieldMcpEnabled:
+			if value, ok := values[i].(*sql.NullBool); !ok {
+				return fmt.Errorf("unexpected type %T for field mcp_enabled", values[i])
+			} else if value.Valid {
+				_m.McpEnabled = value.Bool
 			}
 		case tunnel.FieldCreatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field created_at", values[i])
 			} else if value.Valid {
-				t.CreatedAt = value.Time
+				_m.CreatedAt = value.Time
 			}
 		case tunnel.FieldUpdatedAt:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field updated_at", values[i])
 			} else if value.Valid {
-				t.UpdatedAt = value.Time
+				_m.UpdatedAt = value.Time
 			}
 		case tunnel.FieldNgrokAuthtoken:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field ngrok_authtoken", values[i])
 			} else if value.Valid {
-				t.NgrokAuthtoken = new(string)
-				*t.NgrokAuthtoken = value.String
+				_m.NgrokAuthtoken = new(string)
+				*_m.NgrokAuthtoken = value.String
 			}
 		case tunnel.FieldNgrokDomain:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field ngrok_domain", values[i])
 			} else if value.Valid {
-				t.NgrokDomain = new(string)
-				*t.NgrokDomain = value.String
+				_m.NgrokDomain = new(string)
+				*_m.NgrokDomain = value.String
 			}
 		default:
-			t.selectValues.Set(columns[i], values[i])
+			_m.selectValues.Set(columns[i], values[i])
 		}
 	}
 	return nil
@@ -130,57 +138,60 @@ func (t *Tunnel) assignValues(columns []string, values []any) error {
 
 // Value returns the ent.Value that was dynamically selected and assigned to the Tunnel.
 // This includes values selected through modifiers, order, etc.
-func (t *Tunnel) Value(name string) (ent.Value, error) {
-	return t.selectValues.Get(name)
+func (_m *Tunnel) Value(name string) (ent.Value, error) {
+	return _m.selectValues.Get(name)
 }
 
 // Update returns a builder for updating this Tunnel.
 // Note that you need to call Tunnel.Unwrap() before calling this method if this Tunnel
 // was returned from a transaction, and the transaction was committed or rolled back.
-func (t *Tunnel) Update() *TunnelUpdateOne {
-	return NewTunnelClient(t.config).UpdateOne(t)
+func (_m *Tunnel) Update() *TunnelUpdateOne {
+	return NewTunnelClient(_m.config).UpdateOne(_m)
 }
 
 // Unwrap unwraps the Tunnel entity that was returned from a transaction after it was closed,
 // so that all future queries will be executed through the driver which created the transaction.
-func (t *Tunnel) Unwrap() *Tunnel {
-	_tx, ok := t.config.driver.(*txDriver)
+func (_m *Tunnel) Unwrap() *Tunnel {
+	_tx, ok := _m.config.driver.(*txDriver)
 	if !ok {
 		panic("ent: Tunnel is not a transactional entity")
 	}
-	t.config.driver = _tx.drv
-	return t
+	_m.config.driver = _tx.drv
+	return _m
 }
 
 // String implements the fmt.Stringer.
-func (t *Tunnel) String() string {
+func (_m *Tunnel) String() string {
 	var builder strings.Builder
 	builder.WriteString("Tunnel(")
-	builder.WriteString(fmt.Sprintf("id=%v, ", t.ID))
+	builder.WriteString(fmt.Sprintf("id=%v, ", _m.ID))
 	builder.WriteString("name=")
-	builder.WriteString(t.Name)
+	builder.WriteString(_m.Name)
 	builder.WriteString(", ")
 	builder.WriteString("type=")
-	builder.WriteString(fmt.Sprintf("%v", t.Type))
+	builder.WriteString(fmt.Sprintf("%v", _m.Type))
 	builder.WriteString(", ")
 	builder.WriteString("target=")
-	builder.WriteString(t.Target)
+	builder.WriteString(_m.Target)
 	builder.WriteString(", ")
 	builder.WriteString("enabled=")
-	builder.WriteString(fmt.Sprintf("%v", t.Enabled))
+	builder.WriteString(fmt.Sprintf("%v", _m.Enabled))
+	builder.WriteString(", ")
+	builder.WriteString("mcp_enabled=")
+	builder.WriteString(fmt.Sprintf("%v", _m.McpEnabled))
 	builder.WriteString(", ")
 	builder.WriteString("created_at=")
-	builder.WriteString(t.CreatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.CreatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
 	builder.WriteString("updated_at=")
-	builder.WriteString(t.UpdatedAt.Format(time.ANSIC))
+	builder.WriteString(_m.UpdatedAt.Format(time.ANSIC))
 	builder.WriteString(", ")
-	if v := t.NgrokAuthtoken; v != nil {
+	if v := _m.NgrokAuthtoken; v != nil {
 		builder.WriteString("ngrok_authtoken=")
 		builder.WriteString(*v)
 	}
 	builder.WriteString(", ")
-	if v := t.NgrokDomain; v != nil {
+	if v := _m.NgrokDomain; v != nil {
 		builder.WriteString("ngrok_domain=")
 		builder.WriteString(*v)
 	}

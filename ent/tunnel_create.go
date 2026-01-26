@@ -22,121 +22,135 @@ type TunnelCreate struct {
 }
 
 // SetName sets the "name" field.
-func (tc *TunnelCreate) SetName(s string) *TunnelCreate {
-	tc.mutation.SetName(s)
-	return tc
+func (_c *TunnelCreate) SetName(v string) *TunnelCreate {
+	_c.mutation.SetName(v)
+	return _c
 }
 
 // SetType sets the "type" field.
-func (tc *TunnelCreate) SetType(t tunnel.Type) *TunnelCreate {
-	tc.mutation.SetType(t)
-	return tc
+func (_c *TunnelCreate) SetType(v tunnel.Type) *TunnelCreate {
+	_c.mutation.SetType(v)
+	return _c
 }
 
 // SetTarget sets the "target" field.
-func (tc *TunnelCreate) SetTarget(s string) *TunnelCreate {
-	tc.mutation.SetTarget(s)
-	return tc
+func (_c *TunnelCreate) SetTarget(v string) *TunnelCreate {
+	_c.mutation.SetTarget(v)
+	return _c
 }
 
 // SetEnabled sets the "enabled" field.
-func (tc *TunnelCreate) SetEnabled(b bool) *TunnelCreate {
-	tc.mutation.SetEnabled(b)
-	return tc
+func (_c *TunnelCreate) SetEnabled(v bool) *TunnelCreate {
+	_c.mutation.SetEnabled(v)
+	return _c
 }
 
 // SetNillableEnabled sets the "enabled" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableEnabled(b *bool) *TunnelCreate {
-	if b != nil {
-		tc.SetEnabled(*b)
+func (_c *TunnelCreate) SetNillableEnabled(v *bool) *TunnelCreate {
+	if v != nil {
+		_c.SetEnabled(*v)
 	}
-	return tc
+	return _c
+}
+
+// SetMcpEnabled sets the "mcp_enabled" field.
+func (_c *TunnelCreate) SetMcpEnabled(v bool) *TunnelCreate {
+	_c.mutation.SetMcpEnabled(v)
+	return _c
+}
+
+// SetNillableMcpEnabled sets the "mcp_enabled" field if the given value is not nil.
+func (_c *TunnelCreate) SetNillableMcpEnabled(v *bool) *TunnelCreate {
+	if v != nil {
+		_c.SetMcpEnabled(*v)
+	}
+	return _c
 }
 
 // SetCreatedAt sets the "created_at" field.
-func (tc *TunnelCreate) SetCreatedAt(t time.Time) *TunnelCreate {
-	tc.mutation.SetCreatedAt(t)
-	return tc
+func (_c *TunnelCreate) SetCreatedAt(v time.Time) *TunnelCreate {
+	_c.mutation.SetCreatedAt(v)
+	return _c
 }
 
 // SetNillableCreatedAt sets the "created_at" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableCreatedAt(t *time.Time) *TunnelCreate {
-	if t != nil {
-		tc.SetCreatedAt(*t)
+func (_c *TunnelCreate) SetNillableCreatedAt(v *time.Time) *TunnelCreate {
+	if v != nil {
+		_c.SetCreatedAt(*v)
 	}
-	return tc
+	return _c
 }
 
 // SetUpdatedAt sets the "updated_at" field.
-func (tc *TunnelCreate) SetUpdatedAt(t time.Time) *TunnelCreate {
-	tc.mutation.SetUpdatedAt(t)
-	return tc
+func (_c *TunnelCreate) SetUpdatedAt(v time.Time) *TunnelCreate {
+	_c.mutation.SetUpdatedAt(v)
+	return _c
 }
 
 // SetNillableUpdatedAt sets the "updated_at" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableUpdatedAt(t *time.Time) *TunnelCreate {
-	if t != nil {
-		tc.SetUpdatedAt(*t)
+func (_c *TunnelCreate) SetNillableUpdatedAt(v *time.Time) *TunnelCreate {
+	if v != nil {
+		_c.SetUpdatedAt(*v)
 	}
-	return tc
+	return _c
 }
 
 // SetNgrokAuthtoken sets the "ngrok_authtoken" field.
-func (tc *TunnelCreate) SetNgrokAuthtoken(s string) *TunnelCreate {
-	tc.mutation.SetNgrokAuthtoken(s)
-	return tc
+func (_c *TunnelCreate) SetNgrokAuthtoken(v string) *TunnelCreate {
+	_c.mutation.SetNgrokAuthtoken(v)
+	return _c
 }
 
 // SetNillableNgrokAuthtoken sets the "ngrok_authtoken" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableNgrokAuthtoken(s *string) *TunnelCreate {
-	if s != nil {
-		tc.SetNgrokAuthtoken(*s)
+func (_c *TunnelCreate) SetNillableNgrokAuthtoken(v *string) *TunnelCreate {
+	if v != nil {
+		_c.SetNgrokAuthtoken(*v)
 	}
-	return tc
+	return _c
 }
 
 // SetNgrokDomain sets the "ngrok_domain" field.
-func (tc *TunnelCreate) SetNgrokDomain(s string) *TunnelCreate {
-	tc.mutation.SetNgrokDomain(s)
-	return tc
+func (_c *TunnelCreate) SetNgrokDomain(v string) *TunnelCreate {
+	_c.mutation.SetNgrokDomain(v)
+	return _c
 }
 
 // SetNillableNgrokDomain sets the "ngrok_domain" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableNgrokDomain(s *string) *TunnelCreate {
-	if s != nil {
-		tc.SetNgrokDomain(*s)
+func (_c *TunnelCreate) SetNillableNgrokDomain(v *string) *TunnelCreate {
+	if v != nil {
+		_c.SetNgrokDomain(*v)
 	}
-	return tc
+	return _c
 }
 
 // SetID sets the "id" field.
-func (tc *TunnelCreate) SetID(u uuid.UUID) *TunnelCreate {
-	tc.mutation.SetID(u)
-	return tc
+func (_c *TunnelCreate) SetID(v uuid.UUID) *TunnelCreate {
+	_c.mutation.SetID(v)
+	return _c
 }
 
 // SetNillableID sets the "id" field if the given value is not nil.
-func (tc *TunnelCreate) SetNillableID(u *uuid.UUID) *TunnelCreate {
-	if u != nil {
-		tc.SetID(*u)
+func (_c *TunnelCreate) SetNillableID(v *uuid.UUID) *TunnelCreate {
+	if v != nil {
+		_c.SetID(*v)
 	}
-	return tc
+	return _c
 }
 
 // Mutation returns the TunnelMutation object of the builder.
-func (tc *TunnelCreate) Mutation() *TunnelMutation {
-	return tc.mutation
+func (_c *TunnelCreate) Mutation() *TunnelMutation {
+	return _c.mutation
 }
 
 // Save creates the Tunnel in the database.
-func (tc *TunnelCreate) Save(ctx context.Context) (*Tunnel, error) {
-	tc.defaults()
-	return withHooks(ctx, tc.sqlSave, tc.mutation, tc.hooks)
+func (_c *TunnelCreate) Save(ctx context.Context) (*Tunnel, error) {
+	_c.defaults()
+	return withHooks(ctx, _c.sqlSave, _c.mutation, _c.hooks)
 }
 
 // SaveX calls Save and panics if Save returns an error.
-func (tc *TunnelCreate) SaveX(ctx context.Context) *Tunnel {
-	v, err := tc.Save(ctx)
+func (_c *TunnelCreate) SaveX(ctx context.Context) *Tunnel {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -144,72 +158,79 @@ func (tc *TunnelCreate) SaveX(ctx context.Context) *Tunnel {
 }
 
 // Exec executes the query.
-func (tc *TunnelCreate) Exec(ctx context.Context) error {
-	_, err := tc.Save(ctx)
+func (_c *TunnelCreate) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (tc *TunnelCreate) ExecX(ctx context.Context) {
-	if err := tc.Exec(ctx); err != nil {
+func (_c *TunnelCreate) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
 
 // defaults sets the default values of the builder before save.
-func (tc *TunnelCreate) defaults() {
-	if _, ok := tc.mutation.Enabled(); !ok {
+func (_c *TunnelCreate) defaults() {
+	if _, ok := _c.mutation.Enabled(); !ok {
 		v := tunnel.DefaultEnabled
-		tc.mutation.SetEnabled(v)
+		_c.mutation.SetEnabled(v)
 	}
-	if _, ok := tc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.McpEnabled(); !ok {
+		v := tunnel.DefaultMcpEnabled
+		_c.mutation.SetMcpEnabled(v)
+	}
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		v := tunnel.DefaultCreatedAt()
-		tc.mutation.SetCreatedAt(v)
+		_c.mutation.SetCreatedAt(v)
 	}
-	if _, ok := tc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		v := tunnel.DefaultUpdatedAt()
-		tc.mutation.SetUpdatedAt(v)
+		_c.mutation.SetUpdatedAt(v)
 	}
-	if _, ok := tc.mutation.ID(); !ok {
+	if _, ok := _c.mutation.ID(); !ok {
 		v := tunnel.DefaultID()
-		tc.mutation.SetID(v)
+		_c.mutation.SetID(v)
 	}
 }
 
 // check runs all checks and user-defined validators on the builder.
-func (tc *TunnelCreate) check() error {
-	if _, ok := tc.mutation.Name(); !ok {
+func (_c *TunnelCreate) check() error {
+	if _, ok := _c.mutation.Name(); !ok {
 		return &ValidationError{Name: "name", err: errors.New(`ent: missing required field "Tunnel.name"`)}
 	}
-	if _, ok := tc.mutation.GetType(); !ok {
+	if _, ok := _c.mutation.GetType(); !ok {
 		return &ValidationError{Name: "type", err: errors.New(`ent: missing required field "Tunnel.type"`)}
 	}
-	if v, ok := tc.mutation.GetType(); ok {
+	if v, ok := _c.mutation.GetType(); ok {
 		if err := tunnel.TypeValidator(v); err != nil {
 			return &ValidationError{Name: "type", err: fmt.Errorf(`ent: validator failed for field "Tunnel.type": %w`, err)}
 		}
 	}
-	if _, ok := tc.mutation.Target(); !ok {
+	if _, ok := _c.mutation.Target(); !ok {
 		return &ValidationError{Name: "target", err: errors.New(`ent: missing required field "Tunnel.target"`)}
 	}
-	if _, ok := tc.mutation.Enabled(); !ok {
+	if _, ok := _c.mutation.Enabled(); !ok {
 		return &ValidationError{Name: "enabled", err: errors.New(`ent: missing required field "Tunnel.enabled"`)}
 	}
-	if _, ok := tc.mutation.CreatedAt(); !ok {
+	if _, ok := _c.mutation.McpEnabled(); !ok {
+		return &ValidationError{Name: "mcp_enabled", err: errors.New(`ent: missing required field "Tunnel.mcp_enabled"`)}
+	}
+	if _, ok := _c.mutation.CreatedAt(); !ok {
 		return &ValidationError{Name: "created_at", err: errors.New(`ent: missing required field "Tunnel.created_at"`)}
 	}
-	if _, ok := tc.mutation.UpdatedAt(); !ok {
+	if _, ok := _c.mutation.UpdatedAt(); !ok {
 		return &ValidationError{Name: "updated_at", err: errors.New(`ent: missing required field "Tunnel.updated_at"`)}
 	}
 	return nil
 }
 
-func (tc *TunnelCreate) sqlSave(ctx context.Context) (*Tunnel, error) {
-	if err := tc.check(); err != nil {
+func (_c *TunnelCreate) sqlSave(ctx context.Context) (*Tunnel, error) {
+	if err := _c.check(); err != nil {
 		return nil, err
 	}
-	_node, _spec := tc.createSpec()
-	if err := sqlgraph.CreateNode(ctx, tc.driver, _spec); err != nil {
+	_node, _spec := _c.createSpec()
+	if err := sqlgraph.CreateNode(ctx, _c.driver, _spec); err != nil {
 		if sqlgraph.IsConstraintError(err) {
 			err = &ConstraintError{msg: err.Error(), wrap: err}
 		}
@@ -222,49 +243,53 @@ func (tc *TunnelCreate) sqlSave(ctx context.Context) (*Tunnel, error) {
 			return nil, err
 		}
 	}
-	tc.mutation.id = &_node.ID
-	tc.mutation.done = true
+	_c.mutation.id = &_node.ID
+	_c.mutation.done = true
 	return _node, nil
 }
 
-func (tc *TunnelCreate) createSpec() (*Tunnel, *sqlgraph.CreateSpec) {
+func (_c *TunnelCreate) createSpec() (*Tunnel, *sqlgraph.CreateSpec) {
 	var (
-		_node = &Tunnel{config: tc.config}
+		_node = &Tunnel{config: _c.config}
 		_spec = sqlgraph.NewCreateSpec(tunnel.Table, sqlgraph.NewFieldSpec(tunnel.FieldID, field.TypeUUID))
 	)
-	if id, ok := tc.mutation.ID(); ok {
+	if id, ok := _c.mutation.ID(); ok {
 		_node.ID = id
 		_spec.ID.Value = &id
 	}
-	if value, ok := tc.mutation.Name(); ok {
+	if value, ok := _c.mutation.Name(); ok {
 		_spec.SetField(tunnel.FieldName, field.TypeString, value)
 		_node.Name = value
 	}
-	if value, ok := tc.mutation.GetType(); ok {
+	if value, ok := _c.mutation.GetType(); ok {
 		_spec.SetField(tunnel.FieldType, field.TypeEnum, value)
 		_node.Type = value
 	}
-	if value, ok := tc.mutation.Target(); ok {
+	if value, ok := _c.mutation.Target(); ok {
 		_spec.SetField(tunnel.FieldTarget, field.TypeString, value)
 		_node.Target = value
 	}
-	if value, ok := tc.mutation.Enabled(); ok {
+	if value, ok := _c.mutation.Enabled(); ok {
 		_spec.SetField(tunnel.FieldEnabled, field.TypeBool, value)
 		_node.Enabled = value
 	}
-	if value, ok := tc.mutation.CreatedAt(); ok {
+	if value, ok := _c.mutation.McpEnabled(); ok {
+		_spec.SetField(tunnel.FieldMcpEnabled, field.TypeBool, value)
+		_node.McpEnabled = value
+	}
+	if value, ok := _c.mutation.CreatedAt(); ok {
 		_spec.SetField(tunnel.FieldCreatedAt, field.TypeTime, value)
 		_node.CreatedAt = value
 	}
-	if value, ok := tc.mutation.UpdatedAt(); ok {
+	if value, ok := _c.mutation.UpdatedAt(); ok {
 		_spec.SetField(tunnel.FieldUpdatedAt, field.TypeTime, value)
 		_node.UpdatedAt = value
 	}
-	if value, ok := tc.mutation.NgrokAuthtoken(); ok {
+	if value, ok := _c.mutation.NgrokAuthtoken(); ok {
 		_spec.SetField(tunnel.FieldNgrokAuthtoken, field.TypeString, value)
 		_node.NgrokAuthtoken = &value
 	}
-	if value, ok := tc.mutation.NgrokDomain(); ok {
+	if value, ok := _c.mutation.NgrokDomain(); ok {
 		_spec.SetField(tunnel.FieldNgrokDomain, field.TypeString, value)
 		_node.NgrokDomain = &value
 	}
@@ -279,16 +304,16 @@ type TunnelCreateBulk struct {
 }
 
 // Save creates the Tunnel entities in the database.
-func (tcb *TunnelCreateBulk) Save(ctx context.Context) ([]*Tunnel, error) {
-	if tcb.err != nil {
-		return nil, tcb.err
+func (_c *TunnelCreateBulk) Save(ctx context.Context) ([]*Tunnel, error) {
+	if _c.err != nil {
+		return nil, _c.err
 	}
-	specs := make([]*sqlgraph.CreateSpec, len(tcb.builders))
-	nodes := make([]*Tunnel, len(tcb.builders))
-	mutators := make([]Mutator, len(tcb.builders))
-	for i := range tcb.builders {
+	specs := make([]*sqlgraph.CreateSpec, len(_c.builders))
+	nodes := make([]*Tunnel, len(_c.builders))
+	mutators := make([]Mutator, len(_c.builders))
+	for i := range _c.builders {
 		func(i int, root context.Context) {
-			builder := tcb.builders[i]
+			builder := _c.builders[i]
 			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*TunnelMutation)
@@ -302,11 +327,11 @@ func (tcb *TunnelCreateBulk) Save(ctx context.Context) ([]*Tunnel, error) {
 				var err error
 				nodes[i], specs[i] = builder.createSpec()
 				if i < len(mutators)-1 {
-					_, err = mutators[i+1].Mutate(root, tcb.builders[i+1].mutation)
+					_, err = mutators[i+1].Mutate(root, _c.builders[i+1].mutation)
 				} else {
 					spec := &sqlgraph.BatchCreateSpec{Nodes: specs}
 					// Invoke the actual operation on the latest mutation in the chain.
-					if err = sqlgraph.BatchCreate(ctx, tcb.driver, spec); err != nil {
+					if err = sqlgraph.BatchCreate(ctx, _c.driver, spec); err != nil {
 						if sqlgraph.IsConstraintError(err) {
 							err = &ConstraintError{msg: err.Error(), wrap: err}
 						}
@@ -326,7 +351,7 @@ func (tcb *TunnelCreateBulk) Save(ctx context.Context) ([]*Tunnel, error) {
 		}(i, ctx)
 	}
 	if len(mutators) > 0 {
-		if _, err := mutators[0].Mutate(ctx, tcb.builders[0].mutation); err != nil {
+		if _, err := mutators[0].Mutate(ctx, _c.builders[0].mutation); err != nil {
 			return nil, err
 		}
 	}
@@ -334,8 +359,8 @@ func (tcb *TunnelCreateBulk) Save(ctx context.Context) ([]*Tunnel, error) {
 }
 
 // SaveX is like Save, but panics if an error occurs.
-func (tcb *TunnelCreateBulk) SaveX(ctx context.Context) []*Tunnel {
-	v, err := tcb.Save(ctx)
+func (_c *TunnelCreateBulk) SaveX(ctx context.Context) []*Tunnel {
+	v, err := _c.Save(ctx)
 	if err != nil {
 		panic(err)
 	}
@@ -343,14 +368,14 @@ func (tcb *TunnelCreateBulk) SaveX(ctx context.Context) []*Tunnel {
 }
 
 // Exec executes the query.
-func (tcb *TunnelCreateBulk) Exec(ctx context.Context) error {
-	_, err := tcb.Save(ctx)
+func (_c *TunnelCreateBulk) Exec(ctx context.Context) error {
+	_, err := _c.Save(ctx)
 	return err
 }
 
 // ExecX is like Exec, but panics if an error occurs.
-func (tcb *TunnelCreateBulk) ExecX(ctx context.Context) {
-	if err := tcb.Exec(ctx); err != nil {
+func (_c *TunnelCreateBulk) ExecX(ctx context.Context) {
+	if err := _c.Exec(ctx); err != nil {
 		panic(err)
 	}
 }
