@@ -290,7 +290,7 @@ function editTunnel(id) {
     document.getElementById('tunnel-name').value = tunnel.name;
     document.getElementById('tunnel-type').value = tunnel.type;
     document.getElementById('tunnel-enabled').checked = tunnel.enabled;
-    document.getElementById('tunnel-mcp-enabled').checked = tunnel.mcp_enabled !== false;
+    document.getElementById('tunnel-mcp-enabled').checked = !!tunnel.mcp_enabled;
 
     // Parse protocol and target
     let protocol = 'http://';
@@ -558,6 +558,29 @@ async function loadMCPInfo() {
     }
 }
 
+// MCP Panel collapse/expand functionality
+function initMCPPanel() {
+    const toggleBtn = document.getElementById('toggle-mcp-panel');
+    const panelContent = document.getElementById('mcp-panel-content');
+
+    // Load saved state from localStorage
+    const isCollapsed = localStorage.getItem('mcpPanelCollapsed') === 'true';
+
+    if (isCollapsed) {
+        toggleBtn.classList.add('collapsed');
+        panelContent.classList.add('collapsed');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+        const collapsed = toggleBtn.classList.toggle('collapsed');
+        panelContent.classList.toggle('collapsed');
+
+        // Save state to localStorage
+        localStorage.setItem('mcpPanelCollapsed', collapsed);
+    });
+}
+
+
 function copyMCPEndpoint() {
     const endpoint = document.getElementById('mcp-endpoint-url').textContent;
     navigator.clipboard.writeText(endpoint).then(() => {
@@ -588,3 +611,4 @@ document.getElementById('copy-mcp-config')?.addEventListener('click', copyMCPCon
 
 init();
 loadMCPInfo();
+initMCPPanel();

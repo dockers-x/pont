@@ -332,14 +332,25 @@ func (s *Server) handleVersion(w http.ResponseWriter, r *http.Request) {
 }
 
 func (s *Server) handleMCPInfo(w http.ResponseWriter, r *http.Request) {
-	// Get server address
-	addr := s.addr
-	if addr == "0.0.0.0:13333" || addr == ":13333" {
-		addr = "localhost:13333"
+	// Use the actual request host to construct the endpoint URL
+	// This ensures the endpoint reflects how the client is accessing the server
+	host := r.Host
+	if host == "" {
+		// Fallback to server address if Host header is not present
+		host = s.addr
+		if host == "0.0.0.0:13333" || host == ":13333" {
+			host = "localhost:13333"
+		}
+	}
+
+	// Determine the scheme based on TLS
+	scheme := "http"
+	if r.TLS != nil {
+		scheme = "https"
 	}
 
 	mcpInfo := map[string]interface{}{
-		"endpoint": fmt.Sprintf("http://%s/mcp", addr),
+		"endpoint": fmt.Sprintf("%s://%s/mcp", scheme, host),
 		"status":   "active",
 		"tools": []map[string]string{
 			{
@@ -355,7 +366,7 @@ func (s *Server) handleMCPInfo(w http.ResponseWriter, r *http.Request) {
 		"config_example": map[string]interface{}{
 			"mcpServers": map[string]interface{}{
 				"pont": map[string]interface{}{
-					"url": fmt.Sprintf("http://%s/mcp", addr),
+					"url": fmt.Sprintf("%s://%s/mcp", scheme, host),
 				},
 			},
 		},

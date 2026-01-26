@@ -148,9 +148,14 @@
                 <div class="card mcp-card">
                     <div class="card-header">
                         <h2 data-i18n="mcp.title">MCP Integration</h2>
-                        <span class="badge badge-success" data-i18n="mcp.status_active">Active</span>
+                        <div class="card-header-actions">
+                            <span class="badge badge-success" data-i18n="mcp.status_active">Active</span>
+                            <button class="btn btn-sm btn-ghost toggle-mcp-panel" id="toggle-mcp-panel" aria-label="Toggle MCP panel">
+                                <span class="toggle-icon">▼</span>
+                            </button>
+                        </div>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body mcp-panel-content" id="mcp-panel-content">
                         <p class="mcp-description" data-i18n="mcp.description">
                             Pont supports MCP (Model Context Protocol), allowing AI models to manage tunnels programmatically.
                         </p>
@@ -239,7 +244,7 @@
                         </div>
                         <div class="form-group">
                             <label class="toggle-container">
-                                <input type="checkbox" id="tunnel-mcp-enabled" checked />
+                                <input type="checkbox" id="tunnel-mcp-enabled" />
                                 <span data-i18n="ui.modal.mcp_enabled"
                                     >Allow MCP Management</span
                                 >

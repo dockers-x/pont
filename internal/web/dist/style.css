@@ -714,6 +714,40 @@ body {
     align-items: center;
 }
 
+.mcp-card .card-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toggle-mcp-panel {
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.toggle-mcp-panel .toggle-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 14px;
+}
+
+.toggle-mcp-panel.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.mcp-panel-content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 1;
+}
+
+.mcp-panel-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
 .badge {
     padding: 4px 12px;
     border-radius: 12px;
