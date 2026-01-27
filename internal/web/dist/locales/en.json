@@ -33,6 +33,12 @@
   "ui.system_ready": "System ready. Waiting for configuration...",
   "ui.no_tunnels": "No tunnels configured. Click \"Add Tunnel\" to create one.",
 
+  "ui.empty.title": "No tunnels configured",
+  "ui.empty.description": "Create your first tunnel to expose local services to the internet.",
+
+  "ui.dialog.delete_title": "Delete Tunnel",
+  "ui.dialog.delete_desc": "Are you sure you want to delete this tunnel? This action cannot be undone.",
+
   "ui.modal.add_tunnel": "Add Tunnel",
   "ui.modal.edit_tunnel": "Edit Tunnel",
   "ui.modal.name": "Name",
@@ -64,20 +70,12 @@
   "ui.theme.toggle": "Toggle Theme",
 
   "mcp.title": "MCP Integration",
-  "mcp.subtitle": "Model Context Protocol",
   "mcp.description": "Pont supports MCP (Model Context Protocol), allowing AI models to manage tunnels programmatically.",
   "mcp.endpoint": "MCP Endpoint",
-  "mcp.endpoint_url": "Endpoint URL",
-  "mcp.status": "Status",
-  "mcp.status_active": "Active",
-  "mcp.status_inactive": "Inactive",
   "mcp.available_tools": "Available Tools",
-  "mcp.tool.list_tunnels": "List Tunnels",
   "mcp.tool.list_tunnels_desc": "List all available tunnel configurations with their current status",
-  "mcp.tool.start_tunnel": "Start Tunnel",
   "mcp.tool.start_tunnel_desc": "Start a specific tunnel by ID and get the public URL",
-  "mcp.usage": "Usage",
-  "mcp.usage_desc": "Configure your AI client to connect to the MCP endpoint above. The AI can then manage tunnels on your behalf.",
+  "mcp.copy_config": "Copy Configuration",
   "mcp.config_example": "Configuration Example",
   "mcp.security_note": "Security Note",
   "mcp.security_desc": "The MCP endpoint is accessible on your local network. Ensure proper network security measures are in place."

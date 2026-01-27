@@ -33,6 +33,12 @@
   "ui.system_ready": "システム準備完了。設定を待っています...",
   "ui.no_tunnels": "トンネルが設定されていません。「トンネルを追加」をクリックして作成してください。",
 
+  "ui.empty.title": "トンネルが設定されていません",
+  "ui.empty.description": "最初のトンネルを作成して、ローカルサービスをインターネットに公開しましょう。",
+
+  "ui.dialog.delete_title": "トンネルを削除",
+  "ui.dialog.delete_desc": "このトンネルを削除してもよろしいですか？この操作は元に戻せません。",
+
   "ui.modal.add_tunnel": "トンネルを追加",
   "ui.modal.edit_tunnel": "トンネルを編集",
   "ui.modal.name": "名前",
@@ -64,20 +70,12 @@
   "ui.theme.toggle": "テーマを切り替え",
 
   "mcp.title": "MCP 統合",
-  "mcp.subtitle": "モデルコンテキストプロトコル",
   "mcp.description": "Pont は MCP（モデルコンテキストプロトコル）をサポートしており、AI モデルがプログラムでトンネルを管理できます。",
   "mcp.endpoint": "MCP エンドポイント",
-  "mcp.endpoint_url": "エンドポイント URL",
-  "mcp.status": "ステータス",
-  "mcp.status_active": "アクティブ",
-  "mcp.status_inactive": "非アクティブ",
   "mcp.available_tools": "利用可能なツール",
-  "mcp.tool.list_tunnels": "トンネルをリスト",
   "mcp.tool.list_tunnels_desc": "すべての利用可能なトンネル設定とその現在のステータスをリスト",
-  "mcp.tool.start_tunnel": "トンネルを開始",
   "mcp.tool.start_tunnel_desc": "ID で特定のトンネルを開始し、パブリック URL を取得",
-  "mcp.usage": "使用方法",
-  "mcp.usage_desc": "AI クライアントを上記の MCP エンドポイントに接続するように設定します。AI はあなたに代わってトンネルを管理できます。",
+  "mcp.copy_config": "設定をコピー",
   "mcp.config_example": "設定例",
   "mcp.security_note": "セキュリティ注意",
   "mcp.security_desc": "MCP エンドポイントはローカルネットワークでアクセス可能です。適切なネットワークセキュリティ対策を講じてください。"

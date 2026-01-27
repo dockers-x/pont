@@ -149,13 +149,13 @@
                     <div class="card-header">
                         <h2 data-i18n="mcp.title">MCP Integration</h2>
                         <div class="card-header-actions">
-                            <span class="badge badge-success" data-i18n="mcp.status_active">Active</span>
+                            <span class="badge badge-success">Active</span>
                             <button class="btn btn-sm btn-ghost toggle-mcp-panel" id="toggle-mcp-panel" aria-label="Toggle MCP panel">
                                 <span class="toggle-icon">▼</span>
                             </button>
                         </div>
                     </div>
-                    <div class="card-body mcp-panel-content" id="mcp-panel-content">
+                    <div class="card-body mcp-panel-content collapsed" id="mcp-panel-content">
                         <p class="mcp-description" data-i18n="mcp.description">
                             Pont supports MCP (Model Context Protocol), allowing AI models to manage tunnels programmatically.
                         </p>
@@ -174,11 +174,11 @@
                             <h3 data-i18n="mcp.available_tools">Available Tools</h3>
                             <ul class="mcp-tools-list">
                                 <li>
-                                    <strong data-i18n="mcp.tool.list_tunnels">listTunnels</strong>
+                                    <strong>listTunnels</strong>
                                     <span data-i18n="mcp.tool.list_tunnels_desc">List all available tunnel configurations with their current status</span>
                                 </li>
                                 <li>
-                                    <strong data-i18n="mcp.tool.start_tunnel">startTunnel</strong>
+                                    <strong>startTunnel</strong>
                                     <span data-i18n="mcp.tool.start_tunnel_desc">Start a specific tunnel by ID and get the public URL</span>
                                 </li>
                             </ul>
@@ -193,7 +193,7 @@
     }
   }
 }</code></pre>
-                            <button class="btn btn-sm btn-secondary" id="copy-mcp-config" aria-label="Copy MCP configuration">
+                            <button class="btn btn-sm btn-secondary" id="copy-mcp-config" data-i18n="mcp.copy_config" aria-label="Copy MCP configuration">
                                 Copy Configuration
                             </button>
                         </div>
@@ -414,6 +414,17 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="delete-dialog" class="dialog-overlay" role="alertdialog" aria-labelledby="delete-dialog-title" aria-describedby="delete-dialog-desc">
+            <div class="dialog-content">
+                <h3 id="delete-dialog-title" class="dialog-title" data-i18n="ui.dialog.delete_title">Delete Tunnel</h3>
+                <p id="delete-dialog-desc" class="dialog-description" data-i18n="ui.dialog.delete_desc">Are you sure you want to delete this tunnel? This action cannot be undone.</p>
+                <div class="dialog-actions">
+                    <button type="button" class="btn btn-ghost" id="delete-cancel" data-i18n="ui.modal.cancel">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="delete-confirm" data-i18n="ui.tunnel.delete">Delete</button>
                 </div>
             </div>
         </div>

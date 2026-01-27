@@ -7,6 +7,7 @@
     --cf-orange: #F6821F;
     --cf-orange-hover: #E07010;
     --bg-color: #fafafa;
+    --bg-secondary: #f5f5f5;
     --bg-gradient: linear-gradient(135deg, rgba(66, 133, 244, 0.03) 0%, rgba(234, 67, 53, 0.03) 50%, rgba(251, 188, 4, 0.03) 100%);
     --card-bg: #ffffff;
     --card-border: 1px solid #e5e5e5;
@@ -32,6 +33,7 @@
 [data-theme="dark"] {
     color-scheme: dark;
     --bg-color: #0a0a0a;
+    --bg-secondary: #171717;
     --bg-gradient: linear-gradient(135deg, rgba(66, 133, 244, 0.05) 0%, rgba(234, 67, 53, 0.05) 50%, rgba(251, 188, 4, 0.05) 100%);
     --card-bg: #171717;
     --card-border: 1px solid #262626;
@@ -57,7 +59,7 @@ body {
     background-image: var(--bg-gradient);
     color: var(--text-primary);
     line-height: 1.6;
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     padding-top: 60px;
@@ -737,15 +739,11 @@ body {
 }
 
 .mcp-panel-content {
-    max-height: 2000px;
     overflow: hidden;
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-    opacity: 1;
 }
 
 .mcp-panel-content.collapsed {
-    max-height: 0;
-    opacity: 0;
+    display: none;
 }
 
 .badge {
@@ -870,5 +868,198 @@ body {
     color: #d39e00;
 }
 
-    border-width: 0;
+/* Typography improvements */
+h1, h2, h3 {
+    text-wrap: balance;
+}
+
+p, .mcp-description, .form-help {
+    text-wrap: pretty;
+}
+
+/* Tabular numbers for data */
+.version-info,
+.tunnel-target,
+.tunnel-url,
+.mcp-endpoint code {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Empty state styling */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+    text-align: center;
+}
+
+.empty-state-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.empty-state-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.empty-state-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    max-width: 300px;
+}
+
+/* Notification toast */
+.notification-toast {
+    position: fixed;
+    top: max(20px, env(safe-area-inset-top, 20px));
+    right: max(20px, env(safe-area-inset-right, 20px));
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notification-toast.success {
+    border-color: var(--success-color);
+}
+
+.notification-toast-icon {
+    width: 20px;
+    height: 20px;
+    color: var(--success-color);
+}
+
+/* Delete confirmation dialog */
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.dialog-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.dialog-content {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.dialog-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.dialog-description {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.dialog-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+/* Loading skeleton */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--border-color) 25%,
+        var(--input-bg) 50%,
+        var(--border-color) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s ease-in-out infinite;
+    border-radius: 4px;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.tunnel-item-skeleton {
+    height: 80px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+/* Improved focus states */
+*:focus-visible {
+    outline: 2px solid var(--google-blue);
+    outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .skeleton {
+        animation: none;
+        background: var(--border-color);
+    }
+}
+
+/* Safe area insets for mobile */
+.app-container {
+    padding-left: max(24px, env(safe-area-inset-left, 24px));
+    padding-right: max(24px, env(safe-area-inset-right, 24px));
+    padding-bottom: max(40px, env(safe-area-inset-bottom, 40px));
+}
+
+/* Improved button disabled state */
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Copy button feedback */
+.copy-url-btn.copied,
+.btn.copied {
+    background: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
 }

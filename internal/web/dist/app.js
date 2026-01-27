@@ -6,7 +6,8 @@ const state = {
     currentTheme: localStorage.getItem('theme') || 'light',
     logStream: null,
     isStreamConnected: false,
-    editingTunnelId: null
+    editingTunnelId: null,
+    pendingDeleteId: null
 };
 
 const elements = {
@@ -23,7 +24,10 @@ const elements = {
     tunnelType: document.getElementById('tunnel-type'),
     tunnelProtocol: document.getElementById('tunnel-protocol'),
     ngrokFields: document.getElementById('ngrok-fields'),
-    languageSelector: document.getElementById('language-selector')
+    languageSelector: document.getElementById('language-selector'),
+    deleteDialog: document.getElementById('delete-dialog'),
+    deleteCancel: document.getElementById('delete-cancel'),
+    deleteConfirm: document.getElementById('delete-confirm')
 };
 
 // Apply translations to all elements with data-i18n attribute
@@ -115,10 +119,22 @@ async function fetchStatuses() {
 
 function renderTunnels() {
     if (!state.tunnels || state.tunnels.length === 0) {
-        elements.tunnelsList.innerHTML = `<p style="color: var(--text-secondary); text-align: center;">${i18n.t('ui.no_tunnels')}</p>`;
+        elements.addTunnelBtn.style.display = 'none';
+        elements.tunnelsList.innerHTML = `
+            <div class="empty-state">
+                <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                <h3 class="empty-state-title">${i18n.t('ui.empty.title')}</h3>
+                <p class="empty-state-description">${i18n.t('ui.empty.description')}</p>
+                <button class="btn btn-primary" id="empty-add-tunnel">${i18n.t('ui.add_tunnel')}</button>
+            </div>
+        `;
+        document.getElementById('empty-add-tunnel')?.addEventListener('click', openAddTunnelModal);
         return;
     }
 
+    elements.addTunnelBtn.style.display = '';
     elements.tunnelsList.innerHTML = state.tunnels.map(tunnel => {
         const status = state.statuses[tunnel.id] || { status: 'stopped' };
         const statusText = status.status === 'running' ? i18n.t('ui.tunnel.running') : i18n.t('ui.tunnel.stopped');
@@ -338,7 +354,13 @@ function editTunnel(id) {
 }
 
 async function deleteTunnel(id) {
-    if (!confirm(i18n.t('ui.confirm_delete') || 'Are you sure you want to delete this tunnel?')) return;
+    state.pendingDeleteId = id;
+    elements.deleteDialog.classList.add('active');
+}
+
+async function confirmDeleteTunnel() {
+    const id = state.pendingDeleteId;
+    if (!id) return;
 
     try {
         const res = await fetch(`${API_BASE}/tunnels/${id}`, { method: 'DELETE' });
@@ -347,7 +369,14 @@ async function deleteTunnel(id) {
         await fetchTunnels();
     } catch (err) {
         addLog(`Failed to delete tunnel: ${err.message}`, 'error');
+    } finally {
+        closeDeleteDialog();
     }
+}
+
+function closeDeleteDialog() {
+    elements.deleteDialog.classList.remove('active');
+    state.pendingDeleteId = null;
 }
 
 function openAddTunnelModal() {
@@ -563,12 +592,16 @@ function initMCPPanel() {
     const toggleBtn = document.getElementById('toggle-mcp-panel');
     const panelContent = document.getElementById('mcp-panel-content');
 
-    // Load saved state from localStorage
-    const isCollapsed = localStorage.getItem('mcpPanelCollapsed') === 'true';
+    // Load saved state from localStorage, default to collapsed (HTML has collapsed class by default)
+    const savedState = localStorage.getItem('mcpPanelCollapsed');
+    const isCollapsed = savedState === null || savedState === 'true';
 
     if (isCollapsed) {
         toggleBtn.classList.add('collapsed');
         panelContent.classList.add('collapsed');
+    } else {
+        toggleBtn.classList.remove('collapsed');
+        panelContent.classList.remove('collapsed');
     }
 
     toggleBtn.addEventListener('click', () => {
@@ -595,12 +628,19 @@ function copyMCPConfig() {
     });
 }
 
-function showNotification(message) {
-    // Simple notification - you can enhance this
+function showNotification(message, type = 'success') {
+    // Remove existing notification
+    const existing = document.querySelector('.notification-toast');
+    if (existing) existing.remove();
+
     const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    notification.style.cssText = 'position:fixed;top:20px;right:20px;background:#4caf50;color:white;padding:15px 20px;border-radius:4px;z-index:10000;';
+    notification.className = `notification-toast ${type}`;
+    notification.innerHTML = `
+        <svg class="notification-toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5"/>
+        </svg>
+        <span>${message}</span>
+    `;
     document.body.appendChild(notification);
     setTimeout(() => notification.remove(), 3000);
 }
@@ -608,6 +648,24 @@ function showNotification(message) {
 // Add event listeners for MCP buttons
 document.getElementById('copy-mcp-endpoint')?.addEventListener('click', copyMCPEndpoint);
 document.getElementById('copy-mcp-config')?.addEventListener('click', copyMCPConfig);
+
+// Add event listeners for delete dialog
+elements.deleteCancel?.addEventListener('click', closeDeleteDialog);
+elements.deleteConfirm?.addEventListener('click', confirmDeleteTunnel);
+elements.deleteDialog?.addEventListener('click', (e) => {
+    if (e.target === elements.deleteDialog) closeDeleteDialog();
+});
+
+// Handle Escape key for dialogs
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        if (elements.deleteDialog?.classList.contains('active')) {
+            closeDeleteDialog();
+        } else if (elements.tunnelModal?.classList.contains('active')) {
+            closeModal();
+        }
+    }
+});
 
 init();
 loadMCPInfo();
