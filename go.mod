@@ -6,12 +6,13 @@ require (
 	entgo.io/ent v0.14.5
 	github.com/cloudflare/cloudflared v0.0.0-20260123124536-2b95c6104496
 	github.com/google/uuid v1.6.0
+	github.com/modelcontextprotocol/go-sdk v1.2.0
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/urfave/cli/v2 v2.27.7
 	go.uber.org/zap v1.27.1
 	golang.ngrok.com/ngrok/v2 v2.1.1
-	golang.org/x/text v0.33.0
+	golang.org/x/text v0.34.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	modernc.org/sqlite v1.44.3
 )
@@ -66,7 +67,6 @@ require (
 	github.com/miekg/dns v1.1.66 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
-	github.com/modelcontextprotocol/go-sdk v1.2.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
