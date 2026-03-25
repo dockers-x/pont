@@ -3,7 +3,7 @@ module pont
 go 1.25.0
 
 require (
-	entgo.io/ent v0.14.5
+	entgo.io/ent v0.14.6
 	github.com/cloudflare/cloudflared v0.0.0-20260123124536-2b95c6104496
 	github.com/google/uuid v1.6.0
 	github.com/modelcontextprotocol/go-sdk v1.3.1
@@ -18,7 +18,7 @@ require (
 )
 
 require (
-	ariga.io/atlas v0.32.1-0.20250325101103-175b25e1c1b9 // indirect
+	ariga.io/atlas v0.36.2-0.20250730182955-2c6300d0a3e1 // indirect
 	github.com/BurntSushi/toml v1.6.0 // indirect
 	github.com/agext/levenshtein v1.2.3 // indirect
 	github.com/apparentlymart/go-cidr v1.1.0 // indirect
@@ -61,7 +61,7 @@ require (
 	github.com/jpillora/backoff v1.0.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.18.0 // indirect
-	github.com/mattn/go-colorable v0.1.13 // indirect
+	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.4 // indirect
 	github.com/miekg/dns v1.1.66 // indirect
