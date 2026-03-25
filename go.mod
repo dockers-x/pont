@@ -1,6 +1,6 @@
 module pont
 
-go 1.25.0
+go 1.25.7
 
 require (
 	entgo.io/ent v0.14.5
@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2
 	github.com/urfave/cli/v2 v2.27.7
 	go.uber.org/zap v1.27.1
-	golang.ngrok.com/ngrok/v2 v2.1.1
+	golang.ngrok.com/ngrok/v2 v2.1.2
 	golang.org/x/text v0.35.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	modernc.org/sqlite v1.46.1
