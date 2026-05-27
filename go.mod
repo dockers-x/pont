@@ -6,7 +6,7 @@ require (
 	entgo.io/ent v0.14.6
 	github.com/cloudflare/cloudflared v0.0.0-20260123124536-2b95c6104496
 	github.com/google/uuid v1.6.0
-	github.com/modelcontextprotocol/go-sdk v1.6.0
+	github.com/modelcontextprotocol/go-sdk v1.6.1
 	github.com/nicksnyder/go-i18n/v2 v2.6.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/urfave/cli/v2 v2.27.7
