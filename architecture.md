@@ -297,7 +297,7 @@ handler = loggingMiddleware(
 ### Docker
 ```dockerfile
 # Multi-stage build
-FROM golang:1.24-alpine AS builder
+FROM golang:1.25.7-alpine AS builder
 # Build static binary with embedded assets
 
 FROM alpine:latest

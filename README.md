@@ -82,7 +82,7 @@ See [MCP_README.md](MCP_README.md) for detailed MCP integration guide.
 
 Pont is built with:
 
-- **Backend**: Go 1.24+ with standard library
+- **Backend**: Go 1.25.7+ with standard library
 - **Database**: SQLite with ent ORM (modernc.org/sqlite - pure Go)
 - **Frontend**: Vanilla JavaScript (no frameworks)
 - **Logging**: Zap with log broadcasting
