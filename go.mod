@@ -11,7 +11,7 @@ require (
 	github.com/prometheus/client_golang v1.23.2
 	github.com/urfave/cli/v2 v2.27.7
 	go.uber.org/zap v1.28.0
-	golang.ngrok.com/ngrok/v2 v2.1.4
+	golang.ngrok.com/ngrok/v2 v2.2.0
 	golang.org/x/text v0.40.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	modernc.org/sqlite v1.55.0
